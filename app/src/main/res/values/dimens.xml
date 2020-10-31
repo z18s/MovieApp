@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Search -->
+    <dimen name="search_main_text_size">18sp</dimen>
+
+    <!-- List -->
+    <dimen name="list_text_size">10sp</dimen>
+    <dimen name="list_title_size">18sp</dimen>
+
+    <!-- List -->
+
+    <!-- Title -->
+
+</resources>
