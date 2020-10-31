@@ -1,9 +1,12 @@
 package com.example.movieapp.mvp.presenter;
 
 import com.example.movieapp.Logger;
+import com.example.movieapp.MovieApp;
 import com.example.movieapp.mvp.model.entity.Title;
 import com.example.movieapp.mvp.model.repo.ITitleRepo;
 import com.example.movieapp.mvp.view.ITitleView;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Scheduler;
 import moxy.MvpPresenter;
@@ -13,16 +16,18 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
 
     private static final String TAG = TitlePresenter.class.getSimpleName();
 
-    private final Scheduler scheduler;
-    private final Router router;
-    private final ITitleRepo titleRepo;
+    @Inject
+    Scheduler scheduler;
+    @Inject
+    Router router;
+    @Inject
+    ITitleRepo titleRepo;
+
     private final Title title;
 
-    public TitlePresenter(Scheduler scheduler, Router router, ITitleRepo titleRepo, Title title) {
-        this.scheduler = scheduler;
-        this.router = router;
-        this.titleRepo = titleRepo;
+    public TitlePresenter(Title title) {
         this.title = title;
+        MovieApp.instance.getTitleSubcomponent().inject(this);
     }
 
     @Override
@@ -31,6 +36,12 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
         Logger.showLog(Logger.VERBOSE, TAG, "onFirstViewAttach");
         getViewState().init();
         setData();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getViewState().release();
     }
 
     private void setData() {

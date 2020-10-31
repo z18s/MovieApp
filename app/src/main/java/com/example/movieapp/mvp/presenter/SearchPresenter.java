@@ -1,9 +1,12 @@
 package com.example.movieapp.mvp.presenter;
 
 import com.example.movieapp.Logger;
+import com.example.movieapp.MovieApp;
 import com.example.movieapp.mvp.presenter.button.ISearchButtonPresenter;
 import com.example.movieapp.mvp.view.ISearchView;
 import com.example.movieapp.navigation.Screens;
+
+import javax.inject.Inject;
 
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
@@ -12,10 +15,11 @@ public class SearchPresenter extends MvpPresenter<ISearchView> {
 
     private static final String TAG = SearchPresenter.class.getSimpleName();
 
-    private final Router router;
+    @Inject
+    Router router;
 
-    public SearchPresenter(Router router) {
-        this.router = router;
+    public SearchPresenter() {
+        MovieApp.instance.getSearchSubcomponent().inject(this);
     }
 
     private class SearchButtonPresenter implements ISearchButtonPresenter {
@@ -31,6 +35,12 @@ public class SearchPresenter extends MvpPresenter<ISearchView> {
         super.onFirstViewAttach();
         Logger.showLog(Logger.VERBOSE, TAG, "onFirstViewAttach");
         getViewState().init();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getViewState().release();
     }
 
     private final SearchPresenter.SearchButtonPresenter searchButtonPresenter = new SearchPresenter.SearchButtonPresenter();

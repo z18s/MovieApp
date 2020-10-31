@@ -10,35 +10,30 @@ import com.example.movieapp.R;
 import com.example.movieapp.mvp.presenter.MainPresenter;
 import com.example.movieapp.mvp.view.IMainView;
 
+import javax.inject.Inject;
+
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
-import ru.terrakok.cicerone.Router;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 
 public class MainActivity extends MvpAppCompatActivity implements IMainView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private final NavigatorHolder navigatorHolder = MovieApp.instance.getNavigatorHolder();
-    private final Navigator navigator = new SupportAppNavigator(this, getSupportFragmentManager(), R.id.container);
+    @Inject
+    NavigatorHolder navigatorHolder;
+    Navigator navigator = new SupportAppNavigator(this, getSupportFragmentManager(), R.id.container);
 
     @InjectPresenter
     MainPresenter presenter;
-
-    @ProvidePresenter
-    MainPresenter provideMainPresenter() {
-        Logger.showLog(Logger.VERBOSE, TAG, "provideMainPresenter");
-        Router router = MovieApp.instance.getRouter();
-        return new MainPresenter(router);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MovieApp.instance.getAppComponent().inject(this);
         Logger.showLog(Logger.VERBOSE, TAG, "onCreate");
     }
 

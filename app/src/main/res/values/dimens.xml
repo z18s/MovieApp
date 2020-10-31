@@ -8,8 +8,18 @@
     <dimen name="list_text_size">10sp</dimen>
     <dimen name="list_title_size">18sp</dimen>
 
-    <!-- List -->
-
     <!-- Title -->
+    <dimen name="title_name_size">20sp</dimen>
+    <dimen name="title_type_size">12sp</dimen>
+    <dimen name="title_year_size">12sp</dimen>
+    <dimen name="title_country_size">12sp</dimen>
+    <dimen name="title_director_size">12sp</dimen>
+    <dimen name="title_rating_size">15sp</dimen>
+    <dimen name="title_plot_size">17sp</dimen>
+
+    <dimen name="title_top_less_margin_size">10dp</dimen>
+    <dimen name="title_top_more_margin_size">35dp</dimen>
+    <dimen name="title_start_less_margin_size">5dp</dimen>
+    <dimen name="title_start_more_margin_size">20dp</dimen>
 
 </resources>

@@ -14,18 +14,14 @@ import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
 import com.example.movieapp.R;
 import com.example.movieapp.mvp.model.Tags;
-import com.example.movieapp.mvp.model.repo.ITitlesRepo;
-import com.example.movieapp.mvp.model.repo.retrofit.RetrofitTitlesRepo;
 import com.example.movieapp.mvp.presenter.TitlesPresenter;
 import com.example.movieapp.mvp.view.ITitlesView;
 import com.example.movieapp.ui.BackButtonListener;
 import com.example.movieapp.ui.adapter.TitleAdapter;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
-import ru.terrakok.cicerone.Router;
 
 public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView, BackButtonListener {
 
@@ -40,10 +36,7 @@ public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView,
 
     @ProvidePresenter
     TitlesPresenter provideTitlesPresenter() {
-        ITitlesRepo titlesRepo = new RetrofitTitlesRepo(MovieApp.instance.getApi());
-        Router router = MovieApp.instance.getRouter();
-        Logger.showLog(Logger.VERBOSE, TAG, "provideTitlesPresenter");
-        return new TitlesPresenter(AndroidSchedulers.mainThread(), router, titlesRepo, getQuery());
+        return new TitlesPresenter(getQuery());
     }
 
     @Nullable
@@ -71,6 +64,11 @@ public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView,
     @Override
     public void updateData() {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void release() {
+        MovieApp.instance.releaseTitlesSubcomponent();
     }
 
     @Override

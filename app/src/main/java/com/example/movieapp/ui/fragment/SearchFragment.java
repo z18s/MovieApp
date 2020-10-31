@@ -19,8 +19,6 @@ import com.example.movieapp.ui.BackButtonListener;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
-import ru.terrakok.cicerone.Router;
 
 public class SearchFragment extends MvpAppCompatFragment implements ISearchView, BackButtonListener {
 
@@ -32,13 +30,6 @@ public class SearchFragment extends MvpAppCompatFragment implements ISearchView,
 
     @InjectPresenter
     SearchPresenter presenter;
-
-    @ProvidePresenter
-    SearchPresenter provideSearchPresenter() {
-        Router router = MovieApp.instance.getRouter();
-        Logger.showLog(Logger.VERBOSE, TAG, "provideSearchPresenter");
-        return new SearchPresenter(router);
-    }
 
     @Nullable
     @Override
@@ -61,6 +52,11 @@ public class SearchFragment extends MvpAppCompatFragment implements ISearchView,
             String query = searchView.getQuery().toString();
             presenter.getPresenter().onClick(query);
         });
+    }
+
+    @Override
+    public void release() {
+        MovieApp.instance.releaseSearchSubcomponent();
     }
 
     @Override

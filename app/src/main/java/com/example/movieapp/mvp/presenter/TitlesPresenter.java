@@ -3,6 +3,7 @@ package com.example.movieapp.mvp.presenter;
 import androidx.annotation.UiThread;
 
 import com.example.movieapp.Logger;
+import com.example.movieapp.MovieApp;
 import com.example.movieapp.mvp.model.entity.Title;
 import com.example.movieapp.mvp.model.repo.ITitlesRepo;
 import com.example.movieapp.mvp.presenter.list.ITitlesListPresenter;
@@ -12,6 +13,8 @@ import com.example.movieapp.navigation.Screens;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -24,18 +27,20 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
 
     private static final String TAG = TitlesPresenter.class.getSimpleName();
 
-    private final Scheduler scheduler;
-    private final Router router;
-    private final ITitlesRepo titlesRepo;
+    @Inject
+    Scheduler scheduler;
+    @Inject
+    Router router;
+    @Inject
+    ITitlesRepo titlesRepo;
+
     private final String query;
 
-    private final String noResult = "No Result";
+    private final String noResult = "- No Result -";
 
-    public TitlesPresenter(Scheduler scheduler, Router router, ITitlesRepo titlesRepo, String query) {
-        this.scheduler = scheduler;
-        this.router = router;
-        this.titlesRepo = titlesRepo;
+    public TitlesPresenter(String query) {
         this.query = query;
+        MovieApp.instance.getTitlesSubcomponent().inject(this);
     }
 
     private class TitlesListPresenter implements ITitlesListPresenter {
@@ -46,7 +51,11 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
             int index = view.getPos();
             Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - " + index);
             Title title = titles.get(index);
-            router.navigateTo(new Screens.TitleScreen(title));
+            if (!title.getNameString().equals(noResult)) {
+                Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - title.getNameString() = " + title.getNameString());
+                Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - noResult = " + noResult);
+                router.navigateTo(new Screens.TitleScreen(title));
+            }
         }
 
         @Override
@@ -68,6 +77,12 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
         Logger.showLog(Logger.VERBOSE, TAG, "onFirstViewAttach");
         getViewState().init();
         setData();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getViewState().release();
     }
 
     private void setRecyclerData(ITitleItemView view, Title title) {

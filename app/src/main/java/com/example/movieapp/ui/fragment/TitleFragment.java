@@ -15,19 +15,15 @@ import com.example.movieapp.MovieApp;
 import com.example.movieapp.R;
 import com.example.movieapp.mvp.model.Tags;
 import com.example.movieapp.mvp.model.entity.Title;
-import com.example.movieapp.mvp.model.repo.ITitleRepo;
-import com.example.movieapp.mvp.model.repo.retrofit.RetrofitTitleRepo;
 import com.example.movieapp.mvp.presenter.TitlePresenter;
 import com.example.movieapp.mvp.view.ITitleView;
 import com.example.movieapp.mvp.view.image.GlideImageLoader;
 import com.example.movieapp.mvp.view.image.IImageLoader;
 import com.example.movieapp.ui.BackButtonListener;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
-import ru.terrakok.cicerone.Router;
 
 public class TitleFragment extends MvpAppCompatFragment implements ITitleView, BackButtonListener {
 
@@ -50,10 +46,7 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, B
 
     @ProvidePresenter
     TitlePresenter provideTitlePresenter() {
-        ITitleRepo titleRepo = new RetrofitTitleRepo(MovieApp.instance.getApi());
-        Router router = MovieApp.instance.getRouter();
-        Logger.showLog(Logger.VERBOSE, TAG, "provideTitlePresenter");
-        return new TitlePresenter(AndroidSchedulers.mainThread(), router, titleRepo, getTitle());
+        return new TitlePresenter(getTitle());
     }
 
     @Nullable
@@ -84,10 +77,15 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, B
         imageLoader.loadImage(imageUrl, posterImageView);
         typeTextView.setText(type);
         yearTextView.setText(year);
-        countryTextView.setText(year);
+        countryTextView.setText(country);
         directorTextView.setText(director);
         ratingTextView.setText(rating);
         plotTextView.setText(plot);
+    }
+
+    @Override
+    public void release() {
+        MovieApp.instance.releaseTitleSubcomponent();
     }
 
     private Title getTitle() {
