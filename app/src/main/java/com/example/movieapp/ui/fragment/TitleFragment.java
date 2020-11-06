@@ -68,6 +68,13 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, B
         directorTextView = view.findViewById(R.id.director_title);
         ratingTextView = view.findViewById(R.id.rating_title);
         plotTextView = view.findViewById(R.id.plot_title);
+        initListeners();
+    }
+
+    private void initListeners() {
+        posterImageView.setOnClickListener((view) -> {
+            presenter.onImageClick();
+        });
     }
 
     @Override

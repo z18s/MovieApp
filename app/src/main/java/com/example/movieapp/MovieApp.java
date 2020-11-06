@@ -23,7 +23,7 @@ public class MovieApp extends Application {
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
     }
 
-    public void initSearchSubcomponent() {
+    private void initSearchSubcomponent() {
         AppComponent appComponent = this.appComponent;
         if (appComponent == null) {
             throw new IllegalStateException("AppComponent must be initialized");
@@ -31,7 +31,7 @@ public class MovieApp extends Application {
         this.searchSubcomponent = appComponent.searchSubcomponent();
     }
 
-    public void initTitleSubcomponent() {
+    private void initTitleSubcomponent() {
         SearchSubcomponent searchSubcomponent = this.searchSubcomponent;
         if (searchSubcomponent == null) {
             initSearchSubcomponent();

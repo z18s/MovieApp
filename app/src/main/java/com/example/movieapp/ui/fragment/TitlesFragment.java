@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieapp.Logger;
-import com.example.movieapp.MovieApp;
 import com.example.movieapp.R;
 import com.example.movieapp.mvp.model.Tags;
 import com.example.movieapp.mvp.presenter.TitlesPresenter;
@@ -65,11 +64,6 @@ public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView,
     @Override
     public void updateData() {
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void release() {
-        MovieApp.instance.releaseSearchSubcomponent();
     }
 
     @Override

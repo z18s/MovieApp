@@ -5,6 +5,7 @@ import com.example.movieapp.MovieApp;
 import com.example.movieapp.mvp.model.entity.BasicTitle;
 import com.example.movieapp.mvp.model.repo.ITitleRepo;
 import com.example.movieapp.mvp.view.ITitleView;
+import com.example.movieapp.navigation.Screens;
 
 import javax.inject.Inject;
 
@@ -24,6 +25,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
     ITitleRepo titleRepo;
 
     private final BasicTitle basicTitle;
+    private String imageUrl;
 
     public TitlePresenter(BasicTitle basicTitle) {
         this.basicTitle = basicTitle;
@@ -58,11 +60,18 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
                             detailedTitle.getRating(),
                             detailedTitle.getPlot()
                     );
+                    imageUrl = detailedTitle.getImageUrl();
                 },
                 (e) -> {
                     Logger.showLog(Logger.VERBOSE, TAG, "setData.onError " + e.getMessage());
                 }
         );
+    }
+
+    public void onImageClick() {
+        if (imageUrl != null) {
+            router.navigateTo(new Screens.PosterScreen(imageUrl));
+        }
     }
 
     public boolean backPressed() {

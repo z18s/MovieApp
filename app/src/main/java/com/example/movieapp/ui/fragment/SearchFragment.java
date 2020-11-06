@@ -1,6 +1,7 @@
 package com.example.movieapp.ui.fragment;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class SearchFragment extends MvpAppCompatFragment implements ISearchView,
     @Override
     public void init() {
         searchView = view.findViewById(R.id.sv_search);
+        searchView.setIconifiedByDefault(false);
         button = view.findViewById(R.id.button_search);
         initListeners();
         Logger.showLog(Logger.VERBOSE, TAG, "init");
@@ -49,9 +51,26 @@ public class SearchFragment extends MvpAppCompatFragment implements ISearchView,
 
     private void initListeners() {
         button.setOnClickListener((view) -> {
-            String query = searchView.getQuery().toString();
-            presenter.getPresenter().onClick(query);
+            startSearch();
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                startSearch();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+    private void startSearch() {
+        String query = searchView.getQuery().toString();
+        presenter.getPresenter().onClick(query);
     }
 
     @Override

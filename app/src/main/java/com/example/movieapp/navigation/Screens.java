@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import com.example.movieapp.Logger;
 import com.example.movieapp.mvp.model.Tags;
 import com.example.movieapp.mvp.model.entity.BasicTitle;
+import com.example.movieapp.ui.fragment.PosterFragment;
 import com.example.movieapp.ui.fragment.SearchFragment;
 import com.example.movieapp.ui.fragment.TitleFragment;
 import com.example.movieapp.ui.fragment.TitlesFragment;
@@ -60,6 +61,24 @@ public class Screens {
             titleFragment.setArguments(args);
             Logger.showLog(Logger.VERBOSE, TAG, "new TitleScreen + args");
             return titleFragment;
+        }
+    }
+
+    public static class PosterScreen extends SupportAppScreen {
+        private final String imageUrl;
+
+        public PosterScreen(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        @Override
+        public Fragment getFragment() {
+            PosterFragment posterFragment = new PosterFragment();
+            Bundle args = new Bundle();
+            args.putString(Tags.POSTER_TAG, imageUrl);
+            posterFragment.setArguments(args);
+            Logger.showLog(Logger.VERBOSE, TAG, "new PosterScreen + args");
+            return posterFragment;
         }
     }
 }

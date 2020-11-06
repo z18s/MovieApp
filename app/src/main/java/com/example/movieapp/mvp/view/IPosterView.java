@@ -4,7 +4,7 @@ import moxy.MvpView;
 import moxy.viewstate.strategy.alias.AddToEndSingle;
 
 @AddToEndSingle
-public interface ITitlesView extends MvpView {
+public interface IPosterView extends MvpView {
     void init();
-    void updateData();
+    void setImage(String imageUrl);
 }

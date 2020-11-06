@@ -79,12 +79,6 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
         setData();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getViewState().release();
-    }
-
     private void setRecyclerData(ITitleItemView view, BasicTitle basicTitle) {
         Logger.showLog(Logger.VERBOSE, TAG, "setRecyclerData");
         basicTitle.getName().subscribe(new Observer<String>() {
