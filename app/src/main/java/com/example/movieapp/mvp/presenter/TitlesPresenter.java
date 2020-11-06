@@ -4,8 +4,8 @@ import androidx.annotation.UiThread;
 
 import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
-import com.example.movieapp.mvp.model.entity.Title;
-import com.example.movieapp.mvp.model.repo.ITitlesRepo;
+import com.example.movieapp.mvp.model.entity.BasicTitle;
+import com.example.movieapp.mvp.model.repo.ISearchRepo;
 import com.example.movieapp.mvp.presenter.list.ITitlesListPresenter;
 import com.example.movieapp.mvp.view.ITitlesView;
 import com.example.movieapp.mvp.view.list.ITitleItemView;
@@ -32,7 +32,7 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
     @Inject
     Router router;
     @Inject
-    ITitlesRepo titlesRepo;
+    ISearchRepo titlesRepo;
 
     private final String query;
 
@@ -40,34 +40,34 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
 
     public TitlesPresenter(String query) {
         this.query = query;
-        MovieApp.instance.getTitlesSubcomponent().inject(this);
+        MovieApp.instance.getSearchSubcomponent().inject(this);
     }
 
     private class TitlesListPresenter implements ITitlesListPresenter {
-        private final List<Title> titles = new ArrayList<>();
+        private final List<BasicTitle> basicTitles = new ArrayList<>();
 
         @Override
         public void onItemClick(ITitleItemView view) {
             int index = view.getPos();
             Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - " + index);
-            Title title = titles.get(index);
-            if (!title.getNameString().equals(noResult)) {
-                Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - title.getNameString() = " + title.getNameString());
+            BasicTitle basicTitle = basicTitles.get(index);
+            if (!basicTitle.getNameString().equals(noResult)) {
+                Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - title.getNameString() = " + basicTitle.getNameString());
                 Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - noResult = " + noResult);
-                router.navigateTo(new Screens.TitleScreen(title));
+                router.navigateTo(new Screens.TitleScreen(basicTitle));
             }
         }
 
         @Override
         public void bindView(ITitleItemView view) {
             int index = view.getPos();
-            Title title = titles.get(index);
-            setRecyclerData(view, title);
+            BasicTitle basicTitle = basicTitles.get(index);
+            setRecyclerData(view, basicTitle);
         }
 
         @Override
         public int getCount() {
-            return titles.size();
+            return basicTitles.size();
         }
     }
 
@@ -85,9 +85,9 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
         getViewState().release();
     }
 
-    private void setRecyclerData(ITitleItemView view, Title title) {
+    private void setRecyclerData(ITitleItemView view, BasicTitle basicTitle) {
         Logger.showLog(Logger.VERBOSE, TAG, "setRecyclerData");
-        title.getName().subscribe(new Observer<String>() {
+        basicTitle.getName().subscribe(new Observer<String>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
             }
@@ -95,9 +95,9 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
             @Override
             public void onNext(@NonNull String name) {
                 view.setName(name);
-                view.loadImage(title.getImageUrl());
-                view.setType(title.getType());
-                view.setYear(title.getYear());
+                view.loadImage(basicTitle.getImageUrl());
+                view.setType(basicTitle.getType());
+                view.setYear(basicTitle.getYear());
                 Logger.showLog(Logger.VERBOSE, TAG, "setRecyclerData.onNext - " + name);
             }
 
@@ -114,15 +114,15 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
     @UiThread
     private void setData() {
         Logger.showLog(Logger.VERBOSE, TAG, "setData");
-        titlesRepo.getTitles(query).observeOn(scheduler).subscribe(
+        titlesRepo.getSearch(query).observeOn(scheduler).subscribe(
                 (titles) -> {
-                    titlesListPresenter.titles.clear();
+                    titlesListPresenter.basicTitles.clear();
                     Logger.showLog(Logger.VERBOSE, TAG, "setData.onNext - " + titles.getList());
                     if (titles.getList() == null) {
-                        titlesListPresenter.titles.add(new Title(noResult));
+                        titlesListPresenter.basicTitles.add(new BasicTitle(noResult));
                     } else {
                         Logger.showLog(Logger.VERBOSE, TAG, "setData.onNext - " + titles.getList().size());
-                        titlesListPresenter.titles.addAll(titles.getList());
+                        titlesListPresenter.basicTitles.addAll(titles.getList());
                     }
                     getViewState().updateData();
                 },

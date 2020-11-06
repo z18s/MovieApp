@@ -41,6 +41,18 @@ public class DetailedTitle {
     @Expose
     String plot;
 
+    public DetailedTitle(String id, String name, String imageUrl, String type, String year, String country, String director, String rating, String plot) {
+        this.id = id;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.type = type;
+        this.year = year;
+        this.country = country;
+        this.director = director;
+        this.rating = rating;
+        this.plot = plot;
+    }
+
     public String getId() {
         return id;
     }

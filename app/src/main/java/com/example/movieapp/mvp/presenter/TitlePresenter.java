@@ -2,7 +2,7 @@ package com.example.movieapp.mvp.presenter;
 
 import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
-import com.example.movieapp.mvp.model.entity.Title;
+import com.example.movieapp.mvp.model.entity.BasicTitle;
 import com.example.movieapp.mvp.model.repo.ITitleRepo;
 import com.example.movieapp.mvp.view.ITitleView;
 
@@ -23,10 +23,10 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
     @Inject
     ITitleRepo titleRepo;
 
-    private final Title title;
+    private final BasicTitle basicTitle;
 
-    public TitlePresenter(Title title) {
-        this.title = title;
+    public TitlePresenter(BasicTitle basicTitle) {
+        this.basicTitle = basicTitle;
         MovieApp.instance.getTitleSubcomponent().inject(this);
     }
 
@@ -46,7 +46,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
 
     private void setData() {
         Logger.showLog(Logger.VERBOSE, TAG, "setData");
-        titleRepo.getTitle(title.getId()).observeOn(scheduler).subscribe(
+        titleRepo.getTitle(basicTitle.getId()).observeOn(scheduler).subscribe(
                 (detailedTitle) -> {
                     getViewState().setData(
                             detailedTitle.getName(),

@@ -9,9 +9,17 @@ public class Search {
 
     @SerializedName("Search")
     @Expose
-    List<Title> list;
+    List<BasicTitle> list;
 
-    public List<Title> getList() {
+    public Search(List<BasicTitle> list) {
+        this.list = list;
+    }
+
+    public List<BasicTitle> getList() {
         return list;
+    }
+
+    public void setList(List<BasicTitle> list) {
+        this.list = list;
     }
 }

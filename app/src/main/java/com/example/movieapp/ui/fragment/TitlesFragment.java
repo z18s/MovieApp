@@ -58,7 +58,8 @@ public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView,
     }
 
     private String getQuery() {
-        return getArguments().getString(Tags.QUERY_TAG);
+        String result = getArguments().getString(Tags.QUERY_TAG);
+        return (result != null) ? result : "";
     }
 
     @Override
@@ -68,7 +69,7 @@ public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView,
 
     @Override
     public void release() {
-        MovieApp.instance.releaseTitlesSubcomponent();
+        MovieApp.instance.releaseSearchSubcomponent();
     }
 
     @Override

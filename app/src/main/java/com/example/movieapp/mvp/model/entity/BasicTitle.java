@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class Title implements Parcelable {
+public class BasicTitle implements Parcelable {
 
     @SerializedName("imdbID")
     @Expose
@@ -30,7 +30,7 @@ public class Title implements Parcelable {
     @Expose
     String imageUrl;
 
-    public Title(String id, String name, String type, String year, String imageUrl) {
+    public BasicTitle(String id, String name, String type, String year, String imageUrl) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -38,7 +38,7 @@ public class Title implements Parcelable {
         this.imageUrl = imageUrl;
     }
 
-    public Title(String name) {
+    public BasicTitle(String name) {
         this.name = name;
         id = null;
         type = null;
@@ -46,7 +46,7 @@ public class Title implements Parcelable {
         imageUrl = null;
     }
 
-    protected Title(Parcel in) {
+    protected BasicTitle(Parcel in) {
         id = in.readString();
         name = in.readString();
         type = in.readString();
@@ -68,15 +68,15 @@ public class Title implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Title> CREATOR = new Creator<Title>() {
+    public static final Creator<BasicTitle> CREATOR = new Creator<BasicTitle>() {
         @Override
-        public Title createFromParcel(Parcel in) {
-            return new Title(in);
+        public BasicTitle createFromParcel(Parcel in) {
+            return new BasicTitle(in);
         }
 
         @Override
-        public Title[] newArray(int size) {
-            return new Title[size];
+        public BasicTitle[] newArray(int size) {
+            return new BasicTitle[size];
         }
     };
 

@@ -3,6 +3,7 @@ package com.example.movieapp.di;
 import com.example.movieapp.di.module.ApiModule;
 import com.example.movieapp.di.module.AppModule;
 import com.example.movieapp.di.module.CiceroneModule;
+import com.example.movieapp.di.module.DatabaseModule;
 import com.example.movieapp.di.search.SearchSubcomponent;
 import com.example.movieapp.mvp.presenter.MainPresenter;
 import com.example.movieapp.ui.MainActivity;
@@ -15,6 +16,7 @@ import dagger.Component;
 @Component(modules = {
                 AppModule.class,
                 ApiModule.class,
+                DatabaseModule.class,
                 CiceroneModule.class
 })
 public interface AppComponent {

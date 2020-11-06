@@ -14,7 +14,7 @@ import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
 import com.example.movieapp.R;
 import com.example.movieapp.mvp.model.Tags;
-import com.example.movieapp.mvp.model.entity.Title;
+import com.example.movieapp.mvp.model.entity.BasicTitle;
 import com.example.movieapp.mvp.presenter.TitlePresenter;
 import com.example.movieapp.mvp.view.ITitleView;
 import com.example.movieapp.mvp.view.image.GlideImageLoader;
@@ -88,7 +88,7 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, B
         MovieApp.instance.releaseTitleSubcomponent();
     }
 
-    private Title getTitle() {
+    private BasicTitle getTitle() {
         return getArguments().getParcelable(Tags.TITLE_TAG);
     }
 

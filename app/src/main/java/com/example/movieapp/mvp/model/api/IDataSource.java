@@ -10,8 +10,8 @@ import retrofit2.http.Query;
 public interface IDataSource {
 
     @GET(ApiKey.KEY)
-    Single<Search> getTitles(@Query("s") String query);
+    Single<Search> getSearch(@Query("s") String query);
 
     @GET(ApiKey.KEY)
-    Single<DetailedTitle> getTitle(@Query("i") String id);
+    Single<DetailedTitle> getDetailedTitle(@Query("i") String id);
 }

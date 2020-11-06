@@ -7,7 +7,6 @@ import com.example.movieapp.di.DaggerAppComponent;
 import com.example.movieapp.di.module.AppModule;
 import com.example.movieapp.di.search.SearchSubcomponent;
 import com.example.movieapp.di.title.TitleSubcomponent;
-import com.example.movieapp.di.titles.TitlesSubcomponent;
 
 public class MovieApp extends Application {
 
@@ -15,7 +14,6 @@ public class MovieApp extends Application {
 
     private AppComponent appComponent;
     private SearchSubcomponent searchSubcomponent;
-    private TitlesSubcomponent titlesSubcomponent;
     private TitleSubcomponent titleSubcomponent;
 
     @Override
@@ -33,27 +31,16 @@ public class MovieApp extends Application {
         this.searchSubcomponent = appComponent.searchSubcomponent();
     }
 
-    public void initTitlesSubcomponent() {
+    public void initTitleSubcomponent() {
         SearchSubcomponent searchSubcomponent = this.searchSubcomponent;
         if (searchSubcomponent == null) {
             initSearchSubcomponent();
         }
-        this.titlesSubcomponent = searchSubcomponent.titlesSubcomponent();
-    }
-
-    public void initTitleSubcomponent() {
-        TitlesSubcomponent titlesSubcomponent = this.titlesSubcomponent;
-        if (titlesSubcomponent == null) {
-            initTitlesSubcomponent();
-        }
-        this.titleSubcomponent = titlesSubcomponent.titleSubcomponent();
+        this.titleSubcomponent = searchSubcomponent.titleSubcomponent();
     }
 
     public void releaseSearchSubcomponent() {
         searchSubcomponent = null;
-    }
-    public void releaseTitlesSubcomponent() {
-        titlesSubcomponent = null;
     }
 
     public void releaseTitleSubcomponent() {
@@ -69,13 +56,6 @@ public class MovieApp extends Application {
             initSearchSubcomponent();
         }
         return searchSubcomponent;
-    }
-
-    public TitlesSubcomponent getTitlesSubcomponent() {
-        if (titlesSubcomponent == null) {
-            initTitlesSubcomponent();
-        }
-        return titlesSubcomponent;
     }
 
     public TitleSubcomponent getTitleSubcomponent() {
