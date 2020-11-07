@@ -10,14 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.R;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.presenter.list.ITitlesListPresenter;
 import com.example.movieapp.mvp.view.image.GlideImageLoader;
 import com.example.movieapp.mvp.view.image.IImageLoader;
 import com.example.movieapp.mvp.view.list.ITitleItemView;
 
-public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> {
+public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> implements ILogger {
 
     private static final String TAG = TitleAdapter.class.getSimpleName();
 
@@ -26,7 +26,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.ViewHolder> 
 
     public TitleAdapter(ITitlesListPresenter presenter) {
         this.presenter = presenter;
-        Logger.showLog(Logger.VERBOSE, TAG, "constructor");
+        showVerboseLog(TAG, "constructor");
     }
 
     @NonNull

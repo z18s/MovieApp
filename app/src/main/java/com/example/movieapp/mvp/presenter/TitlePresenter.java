@@ -1,7 +1,7 @@
 package com.example.movieapp.mvp.presenter;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.entity.BasicTitle;
 import com.example.movieapp.mvp.model.repo.ITitleRepo;
 import com.example.movieapp.mvp.view.ITitleView;
@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.core.Scheduler;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
-public class TitlePresenter extends MvpPresenter<ITitleView> {
+public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger {
 
     private static final String TAG = TitlePresenter.class.getSimpleName();
 
@@ -35,7 +35,6 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        Logger.showLog(Logger.VERBOSE, TAG, "onFirstViewAttach");
         getViewState().init();
         setData();
     }
@@ -47,7 +46,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
     }
 
     private void setData() {
-        Logger.showLog(Logger.VERBOSE, TAG, "setData");
+        showVerboseLog(TAG, "setData");
         titleRepo.getTitle(basicTitle.getId()).observeOn(scheduler).subscribe(
                 (detailedTitle) -> {
                     getViewState().setData(
@@ -63,7 +62,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> {
                     imageUrl = detailedTitle.getImageUrl();
                 },
                 (e) -> {
-                    Logger.showLog(Logger.VERBOSE, TAG, "setData.onError " + e.getMessage());
+                    showVerboseLog(TAG, "setData.onError " + e.getMessage());
                 }
         );
     }

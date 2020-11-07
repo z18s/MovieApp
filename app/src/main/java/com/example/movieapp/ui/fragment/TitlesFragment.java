@@ -10,8 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.R;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.Tags;
 import com.example.movieapp.mvp.presenter.TitlesPresenter;
 import com.example.movieapp.mvp.view.ITitlesView;
@@ -22,7 +22,7 @@ import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
-public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView, BackButtonListener {
+public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView, ILogger, BackButtonListener {
 
     private static final String TAG = TitlesFragment.class.getSimpleName();
 
@@ -43,7 +43,7 @@ public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_titles, container, false);
         recyclerView = view.findViewById(R.id.rv_titles);
-        Logger.showLog(Logger.VERBOSE, TAG, "onCreateView");
+        showVerboseLog(TAG, "onCreateView");
         return view;
     }
 
@@ -53,7 +53,7 @@ public class TitlesFragment extends MvpAppCompatFragment implements ITitlesView,
         adapter = new TitleAdapter(presenter.getPresenter());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        Logger.showLog(Logger.VERBOSE, TAG, "init");
+        showVerboseLog(TAG, "init");
     }
 
     private String getQuery() {

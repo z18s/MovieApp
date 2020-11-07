@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.movieapp.Logger;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.MovieApp;
 import com.example.movieapp.R;
 import com.example.movieapp.mvp.presenter.MainPresenter;
@@ -18,7 +18,7 @@ import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 
-public class MainActivity extends MvpAppCompatActivity implements IMainView {
+public class MainActivity extends MvpAppCompatActivity implements IMainView, ILogger {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -34,21 +34,21 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MovieApp.instance.getAppComponent().inject(this);
-        Logger.showLog(Logger.VERBOSE, TAG, "onCreate");
+        showVerboseLog(TAG, "onCreate");
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         navigatorHolder.setNavigator(navigator);
-        Logger.showLog(Logger.VERBOSE, TAG, "onResumeFragments");
+        showVerboseLog(TAG, "onResumeFragments");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         navigatorHolder.removeNavigator();
-        Logger.showLog(Logger.VERBOSE, TAG, "onPause");
+        showVerboseLog(TAG, "onPause");
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.mvp.model.Tags;
 import com.example.movieapp.mvp.model.entity.BasicTitle;
 import com.example.movieapp.ui.fragment.PosterFragment;
@@ -16,13 +15,10 @@ import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
 public class Screens {
 
-    private static final String TAG = Screens.class.getSimpleName();
-
     public static class SearchScreen extends SupportAppScreen {
 
         @Override
         public Fragment getFragment() {
-            Logger.showLog(Logger.VERBOSE, TAG, "new SearchFragment");
             return new SearchFragment();
         }
     }
@@ -41,7 +37,6 @@ public class Screens {
             Bundle args = new Bundle();
             args.putString(Tags.QUERY_TAG, query);
             titlesFragment.setArguments(args);
-            Logger.showLog(Logger.VERBOSE, TAG, "new TitlesScreen + args");
             return titlesFragment;
         }
     }
@@ -59,7 +54,6 @@ public class Screens {
             Bundle args = new Bundle();
             args.putParcelable(Tags.TITLE_TAG, basicTitle);
             titleFragment.setArguments(args);
-            Logger.showLog(Logger.VERBOSE, TAG, "new TitleScreen + args");
             return titleFragment;
         }
     }
@@ -77,7 +71,6 @@ public class Screens {
             Bundle args = new Bundle();
             args.putString(Tags.POSTER_TAG, imageUrl);
             posterFragment.setArguments(args);
-            Logger.showLog(Logger.VERBOSE, TAG, "new PosterScreen + args");
             return posterFragment;
         }
     }

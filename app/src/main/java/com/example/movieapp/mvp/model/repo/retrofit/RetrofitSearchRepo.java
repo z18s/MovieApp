@@ -1,6 +1,6 @@
 package com.example.movieapp.mvp.model.repo.retrofit;
 
-import com.example.movieapp.Logger;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.api.IDataSource;
 import com.example.movieapp.mvp.model.cache.ISearchCache;
 import com.example.movieapp.mvp.model.entity.Search;
@@ -10,7 +10,7 @@ import com.example.movieapp.mvp.model.repo.ISearchRepo;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class RetrofitSearchRepo implements ISearchRepo {
+public class RetrofitSearchRepo implements ISearchRepo, ILogger {
 
     private static final String TAG = RetrofitSearchRepo.class.getSimpleName();
 
@@ -26,7 +26,7 @@ public class RetrofitSearchRepo implements ISearchRepo {
 
     @Override
     public Single<Search> getSearch(String query) {
-        Logger.showLog(Logger.VERBOSE, TAG, "getSearch");
+        showVerboseLog(TAG, "getSearch");
 
         return networkStatus.isOnlineSingle().flatMap((isOnline) -> {
             if (isOnline) {

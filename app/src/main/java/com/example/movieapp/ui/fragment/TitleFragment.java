@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
 import com.example.movieapp.R;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.Tags;
 import com.example.movieapp.mvp.model.entity.BasicTitle;
 import com.example.movieapp.mvp.presenter.TitlePresenter;
@@ -25,7 +25,7 @@ import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
-public class TitleFragment extends MvpAppCompatFragment implements ITitleView, BackButtonListener {
+public class TitleFragment extends MvpAppCompatFragment implements ITitleView, ILogger, BackButtonListener {
 
     private static final String TAG = TitleFragment.class.getSimpleName();
 
@@ -53,13 +53,13 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, B
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_title, container, false);
-        Logger.showLog(Logger.VERBOSE, TAG, "onCreateView");
+        showVerboseLog(TAG, "onCreateView");
         return view;
     }
 
     @Override
     public void init() {
-        Logger.showLog(Logger.VERBOSE, TAG, "init");
+        showVerboseLog(TAG, "init");
         nameTextView = view.findViewById(R.id.name_title);
         posterImageView = view.findViewById(R.id.poster_title);
         typeTextView = view.findViewById(R.id.type_title);
@@ -79,7 +79,7 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, B
 
     @Override
     public void setData(String name, String imageUrl, String type, String year, String country, String director, String rating, String plot) {
-        Logger.showLog(Logger.VERBOSE, TAG, "setData.nameTextView = " + nameTextView);
+        showVerboseLog(TAG, "setData.nameTextView = " + nameTextView);
         nameTextView.setText(name);
         imageLoader.loadImage(imageUrl, posterImageView);
         typeTextView.setText(type);

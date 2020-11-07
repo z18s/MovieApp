@@ -1,7 +1,6 @@
 package com.example.movieapp.ui.fragment;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
 import com.example.movieapp.R;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.presenter.SearchPresenter;
 import com.example.movieapp.mvp.view.ISearchView;
 import com.example.movieapp.ui.BackButtonListener;
@@ -21,7 +20,7 @@ import com.example.movieapp.ui.BackButtonListener;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 
-public class SearchFragment extends MvpAppCompatFragment implements ISearchView, BackButtonListener {
+public class SearchFragment extends MvpAppCompatFragment implements ISearchView, ILogger, BackButtonListener {
 
     private static final String TAG = SearchFragment.class.getSimpleName();
 
@@ -36,7 +35,7 @@ public class SearchFragment extends MvpAppCompatFragment implements ISearchView,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search, container, false);
-        Logger.showLog(Logger.VERBOSE, TAG, "onCreateView");
+        showVerboseLog(TAG, "onCreateView");
         return view;
     }
 
@@ -46,18 +45,18 @@ public class SearchFragment extends MvpAppCompatFragment implements ISearchView,
         searchView.setIconifiedByDefault(false);
         button = view.findViewById(R.id.button_search);
         initListeners();
-        Logger.showLog(Logger.VERBOSE, TAG, "init");
+        showVerboseLog(TAG, "init");
     }
 
     private void initListeners() {
         button.setOnClickListener((view) -> {
-            startSearch();
+            startSearch(searchView.getQuery().toString());
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                startSearch();
+                startSearch(query);
                 return true;
             }
 
@@ -68,8 +67,7 @@ public class SearchFragment extends MvpAppCompatFragment implements ISearchView,
         });
     }
 
-    private void startSearch() {
-        String query = searchView.getQuery().toString();
+    private void startSearch(String query) {
         presenter.getPresenter().onClick(query);
     }
 

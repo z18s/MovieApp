@@ -7,15 +7,15 @@ import android.net.NetworkRequest;
 
 import androidx.annotation.NonNull;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.network.INetworkStatus;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public class AndroidNetworkStatus implements INetworkStatus {
+public class AndroidNetworkStatus implements INetworkStatus, ILogger {
 
     private static final String TAG = AndroidNetworkStatus.class.getSimpleName();
 
@@ -33,21 +33,21 @@ public class AndroidNetworkStatus implements INetworkStatus {
             @Override
             public void onAvailable(@NonNull Network network) {
                 super.onAvailable(network);
-                Logger.showLog(Logger.VERBOSE, TAG, "onAvailable");
+                showVerboseLog(TAG, "onAvailable");
                 statusObject.onNext(true);
             }
 
             @Override
             public void onUnavailable() {
                 super.onUnavailable();
-                Logger.showLog(Logger.VERBOSE, TAG, "onUnavailable");
+                showVerboseLog(TAG, "onUnavailable");
                 statusObject.onNext(false);
             }
 
             @Override
             public void onLost(@NonNull Network network) {
                 super.onLost(network);
-                Logger.showLog(Logger.VERBOSE, TAG, "onLost");
+                showVerboseLog(TAG, "onLost");
                 statusObject.onNext(false);
             }
         });

@@ -1,6 +1,6 @@
 package com.example.movieapp.mvp.model.cache.room;
 
-import com.example.movieapp.Logger;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.cache.ISearchCache;
 import com.example.movieapp.mvp.model.entity.BasicTitle;
 import com.example.movieapp.mvp.model.entity.Search;
@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class RoomSearchCache implements ISearchCache {
+public class RoomSearchCache implements ISearchCache, ILogger {
 
     private static final String TAG = RoomSearchCache.class.getSimpleName();
 
@@ -27,7 +27,7 @@ public class RoomSearchCache implements ISearchCache {
 
     @Override
     public Single<Search> getSearch(String query) {
-        Logger.showLog(Logger.VERBOSE, TAG, "getSearch");
+        showVerboseLog(TAG, "getSearch");
         return Single.fromCallable(() -> {
 
             RoomSearch roomSearch = db.searchDao().findByQuery(query);
@@ -46,7 +46,7 @@ public class RoomSearchCache implements ISearchCache {
 
     @Override
     public Completable putSearch(String query, Search search) {
-        Logger.showLog(Logger.VERBOSE, TAG, "putSearch");
+        showVerboseLog(TAG, "putSearch");
         return Completable.fromAction(() -> {
 
             List<String> ids = new ArrayList<>();
@@ -65,21 +65,21 @@ public class RoomSearchCache implements ISearchCache {
     }
 
     private BasicTitle getTitle(String id) {
-        Logger.showLog(Logger.VERBOSE, TAG, "getTitle");
+        showVerboseLog(TAG, "getTitle");
 
-            RoomBasicTitle roomBasicTitle = db.basicTitleDao().findById(id);
+        RoomBasicTitle roomBasicTitle = db.basicTitleDao().findById(id);
 
-            return new BasicTitle(
-                    roomBasicTitle.getId(),
-                    roomBasicTitle.getName(),
-                    roomBasicTitle.getType(),
-                    roomBasicTitle.getYear(),
-                    roomBasicTitle.getImageUrl()
-            );
+        return new BasicTitle(
+                roomBasicTitle.getId(),
+                roomBasicTitle.getName(),
+                roomBasicTitle.getType(),
+                roomBasicTitle.getYear(),
+                roomBasicTitle.getImageUrl()
+        );
     }
 
     private void putTitle(BasicTitle basicTitle) {
-        Logger.showLog(Logger.VERBOSE, TAG, "putTitle");
+        showVerboseLog(TAG, "putTitle");
 
         db.basicTitleDao().insert(new RoomBasicTitle(
                 basicTitle.getId(),

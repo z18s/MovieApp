@@ -1,7 +1,7 @@
 package com.example.movieapp.mvp.presenter;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.view.IPosterView;
 
 import javax.inject.Inject;
@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
-public class PosterPresenter extends MvpPresenter<IPosterView> {
+public class PosterPresenter extends MvpPresenter<IPosterView> implements ILogger {
 
     private static final String TAG = PosterPresenter.class.getSimpleName();
 
@@ -26,13 +26,12 @@ public class PosterPresenter extends MvpPresenter<IPosterView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        Logger.showLog(Logger.VERBOSE, TAG, "onFirstViewAttach");
         getViewState().init();
         setData();
     }
 
     private void setData() {
-        Logger.showLog(Logger.VERBOSE, TAG, "setData");
+        showVerboseLog(TAG, "setData");
         getViewState().setImage(imageUrl);
     }
 

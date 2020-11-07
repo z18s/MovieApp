@@ -1,6 +1,5 @@
 package com.example.movieapp.mvp.presenter;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
 import com.example.movieapp.mvp.presenter.button.ISearchButtonPresenter;
 import com.example.movieapp.mvp.view.ISearchView;
@@ -12,8 +11,6 @@ import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
 public class SearchPresenter extends MvpPresenter<ISearchView> {
-
-    private static final String TAG = SearchPresenter.class.getSimpleName();
 
     @Inject
     Router router;
@@ -33,7 +30,6 @@ public class SearchPresenter extends MvpPresenter<ISearchView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        Logger.showLog(Logger.VERBOSE, TAG, "onFirstViewAttach");
         getViewState().init();
     }
 

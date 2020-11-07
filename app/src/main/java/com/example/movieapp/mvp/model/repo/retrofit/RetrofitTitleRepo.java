@@ -1,6 +1,6 @@
 package com.example.movieapp.mvp.model.repo.retrofit;
 
-import com.example.movieapp.Logger;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.api.IDataSource;
 import com.example.movieapp.mvp.model.cache.ITitleCache;
 import com.example.movieapp.mvp.model.entity.DetailedTitle;
@@ -10,7 +10,7 @@ import com.example.movieapp.mvp.model.repo.ITitleRepo;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class RetrofitTitleRepo implements ITitleRepo {
+public class RetrofitTitleRepo implements ITitleRepo, ILogger {
 
     private static final String TAG = RetrofitTitleRepo.class.getSimpleName();
 
@@ -26,7 +26,7 @@ public class RetrofitTitleRepo implements ITitleRepo {
 
     @Override
     public Single<DetailedTitle> getTitle(String id) {
-        Logger.showLog(Logger.VERBOSE, TAG, "getTitle");
+        showVerboseLog(TAG, "getTitle");
 
         return networkStatus.isOnlineSingle().flatMap((isOnline) -> {
             if (isOnline) {

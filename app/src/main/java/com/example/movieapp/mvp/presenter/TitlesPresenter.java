@@ -2,8 +2,8 @@ package com.example.movieapp.mvp.presenter;
 
 import androidx.annotation.UiThread;
 
-import com.example.movieapp.Logger;
 import com.example.movieapp.MovieApp;
+import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.entity.BasicTitle;
 import com.example.movieapp.mvp.model.repo.ISearchRepo;
 import com.example.movieapp.mvp.presenter.list.ITitlesListPresenter;
@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
-public class TitlesPresenter extends MvpPresenter<ITitlesView> {
+public class TitlesPresenter extends MvpPresenter<ITitlesView> implements ILogger {
 
     private static final String TAG = TitlesPresenter.class.getSimpleName();
 
@@ -49,11 +49,9 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
         @Override
         public void onItemClick(ITitleItemView view) {
             int index = view.getPos();
-            Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - " + index);
+            showVerboseLog(TAG, "TitlesListPresenter.onItemClick - " + index);
             BasicTitle basicTitle = basicTitles.get(index);
             if (!basicTitle.getNameString().equals(noResult)) {
-                Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - title.getNameString() = " + basicTitle.getNameString());
-                Logger.showLog(Logger.VERBOSE, TAG, "TitlesListPresenter.onItemClick - noResult = " + noResult);
                 router.navigateTo(new Screens.TitleScreen(basicTitle));
             }
         }
@@ -74,13 +72,12 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        Logger.showLog(Logger.VERBOSE, TAG, "onFirstViewAttach");
         getViewState().init();
         setData();
     }
 
     private void setRecyclerData(ITitleItemView view, BasicTitle basicTitle) {
-        Logger.showLog(Logger.VERBOSE, TAG, "setRecyclerData");
+        showVerboseLog(TAG, "setRecyclerData");
         basicTitle.getName().subscribe(new Observer<String>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -92,7 +89,7 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
                 view.loadImage(basicTitle.getImageUrl());
                 view.setType(basicTitle.getType());
                 view.setYear(basicTitle.getYear());
-                Logger.showLog(Logger.VERBOSE, TAG, "setRecyclerData.onNext - " + name);
+                showVerboseLog(TAG, "setRecyclerData.onNext - " + name);
             }
 
             @Override
@@ -107,21 +104,21 @@ public class TitlesPresenter extends MvpPresenter<ITitlesView> {
 
     @UiThread
     private void setData() {
-        Logger.showLog(Logger.VERBOSE, TAG, "setData");
+        showVerboseLog(TAG, "setData");
         titlesRepo.getSearch(query).observeOn(scheduler).subscribe(
                 (titles) -> {
                     titlesListPresenter.basicTitles.clear();
-                    Logger.showLog(Logger.VERBOSE, TAG, "setData.onNext - " + titles.getList());
+                    showVerboseLog(TAG, "setData.onNext - " + titles.getList());
                     if (titles.getList() == null) {
                         titlesListPresenter.basicTitles.add(new BasicTitle(noResult));
                     } else {
-                        Logger.showLog(Logger.VERBOSE, TAG, "setData.onNext - " + titles.getList().size());
+                        showVerboseLog(TAG, "setData.onNext - " + titles.getList().size());
                         titlesListPresenter.basicTitles.addAll(titles.getList());
                     }
                     getViewState().updateData();
                 },
                 (e) -> {
-                    Logger.showLog(Logger.VERBOSE, TAG, "setData.onError - " + e.getMessage());
+                    showVerboseLog(TAG, "setData.onError - " + e.getMessage());
                 }
         );
         getViewState().updateData();
