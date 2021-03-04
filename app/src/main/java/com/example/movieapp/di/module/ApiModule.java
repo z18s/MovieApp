@@ -1,8 +1,8 @@
 package com.example.movieapp.di.module;
 
-import com.example.movieapp.mvp.model.api.IDataSource;
-import com.example.movieapp.mvp.model.network.INetworkStatus;
-import com.example.movieapp.ui.network.AndroidNetworkStatus;
+import com.example.movieapp.mvp.model.base.api.IDataSource;
+import com.example.movieapp.utils.network.INetworkStatus;
+import com.example.movieapp.utils.network.AndroidNetworkStatus;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -45,7 +45,6 @@ public class ApiModule {
                 .create(IDataSource.class);
     }
 
-    @Singleton
     @Provides
     INetworkStatus networkStatus() {
         return new AndroidNetworkStatus();

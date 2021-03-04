@@ -1,12 +1,12 @@
 package com.example.movieapp.di.search;
 
-import com.example.movieapp.mvp.model.api.IDataSource;
-import com.example.movieapp.mvp.model.cache.ISearchCache;
-import com.example.movieapp.mvp.model.cache.room.RoomSearchCache;
-import com.example.movieapp.mvp.model.entity.room.Database;
-import com.example.movieapp.mvp.model.network.INetworkStatus;
-import com.example.movieapp.mvp.model.repo.ISearchRepo;
-import com.example.movieapp.mvp.model.repo.retrofit.RetrofitSearchRepo;
+import com.example.movieapp.mvp.model.base.api.IDataSource;
+import com.example.movieapp.mvp.model.search.cache.ISearchCache;
+import com.example.movieapp.mvp.model.search.cache.RoomSearchCache;
+import com.example.movieapp.mvp.model.base.database.Database;
+import com.example.movieapp.utils.network.INetworkStatus;
+import com.example.movieapp.mvp.model.search.repo.ISearchRepo;
+import com.example.movieapp.mvp.model.search.repo.RetrofitSearchRepo;
 
 import dagger.Module;
 import dagger.Provides;

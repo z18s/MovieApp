@@ -1,12 +1,12 @@
 package com.example.movieapp.di.title;
 
-import com.example.movieapp.mvp.model.api.IDataSource;
-import com.example.movieapp.mvp.model.cache.ITitleCache;
-import com.example.movieapp.mvp.model.cache.room.RoomTitleCache;
-import com.example.movieapp.mvp.model.entity.room.Database;
-import com.example.movieapp.mvp.model.network.INetworkStatus;
-import com.example.movieapp.mvp.model.repo.ITitleRepo;
-import com.example.movieapp.mvp.model.repo.retrofit.RetrofitTitleRepo;
+import com.example.movieapp.mvp.model.base.api.IDataSource;
+import com.example.movieapp.mvp.model.title.cache.ITitleCache;
+import com.example.movieapp.mvp.model.title.cache.RoomTitleCache;
+import com.example.movieapp.mvp.model.base.database.Database;
+import com.example.movieapp.utils.network.INetworkStatus;
+import com.example.movieapp.mvp.model.title.repo.ITitleRepo;
+import com.example.movieapp.mvp.model.title.repo.RetrofitTitleRepo;
 
 import dagger.Module;
 import dagger.Provides;

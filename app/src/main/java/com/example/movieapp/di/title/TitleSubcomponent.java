@@ -1,7 +1,7 @@
 package com.example.movieapp.di.title;
 
-import com.example.movieapp.mvp.presenter.PosterPresenter;
-import com.example.movieapp.mvp.presenter.TitlePresenter;
+import com.example.movieapp.mvp.presenter.title.PosterPresenter;
+import com.example.movieapp.mvp.presenter.title.TitlePresenter;
 
 import dagger.Subcomponent;
 

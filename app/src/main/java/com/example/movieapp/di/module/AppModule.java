@@ -1,6 +1,6 @@
 package com.example.movieapp.di.module;
 
-import com.example.movieapp.MovieApp;
+import com.example.movieapp.application.MovieApp;
 
 import dagger.Module;
 import dagger.Provides;

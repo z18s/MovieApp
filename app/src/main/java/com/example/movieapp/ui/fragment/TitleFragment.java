@@ -10,15 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.movieapp.MovieApp;
+import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.R;
 import com.example.movieapp.logger.ILogger;
-import com.example.movieapp.mvp.model.Tags;
-import com.example.movieapp.mvp.model.entity.BasicTitle;
-import com.example.movieapp.mvp.presenter.TitlePresenter;
-import com.example.movieapp.mvp.view.ITitleView;
-import com.example.movieapp.mvp.view.image.GlideImageLoader;
-import com.example.movieapp.mvp.view.image.IImageLoader;
+import com.example.movieapp.mvp.model.base.TagConstants;
+import com.example.movieapp.mvp.model.search.data.SearchResult;
+import com.example.movieapp.mvp.presenter.title.TitlePresenter;
+import com.example.movieapp.mvp.view.title.ITitleView;
+import com.example.movieapp.utils.image.GlideImageLoader;
+import com.example.movieapp.utils.image.IImageLoader;
 import com.example.movieapp.ui.BackButtonListener;
 
 import moxy.MvpAppCompatFragment;
@@ -95,8 +95,8 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
         MovieApp.instance.releaseTitleSubcomponent();
     }
 
-    private BasicTitle getTitle() {
-        return getArguments().getParcelable(Tags.TITLE_TAG);
+    private SearchResult getTitle() {
+        return getArguments().getParcelable(TagConstants.TITLE_TAG);
     }
 
     @Override

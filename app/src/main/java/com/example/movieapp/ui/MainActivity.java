@@ -5,10 +5,10 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.example.movieapp.logger.ILogger;
-import com.example.movieapp.MovieApp;
+import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.R;
-import com.example.movieapp.mvp.presenter.MainPresenter;
-import com.example.movieapp.mvp.view.IMainView;
+import com.example.movieapp.mvp.presenter.base.MainPresenter;
+import com.example.movieapp.mvp.view.base.IMainView;
 
 import javax.inject.Inject;
 

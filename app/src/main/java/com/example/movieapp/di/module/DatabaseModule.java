@@ -2,8 +2,8 @@ package com.example.movieapp.di.module;
 
 import androidx.room.Room;
 
-import com.example.movieapp.MovieApp;
-import com.example.movieapp.mvp.model.entity.room.Database;
+import com.example.movieapp.application.MovieApp;
+import com.example.movieapp.mvp.model.base.database.Database;
 
 import javax.inject.Singleton;
 

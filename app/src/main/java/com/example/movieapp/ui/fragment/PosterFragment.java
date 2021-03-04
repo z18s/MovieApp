@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 
 import com.example.movieapp.R;
 import com.example.movieapp.logger.ILogger;
-import com.example.movieapp.mvp.model.Tags;
-import com.example.movieapp.mvp.presenter.PosterPresenter;
-import com.example.movieapp.mvp.view.IPosterView;
-import com.example.movieapp.mvp.view.image.GlideImageLoader;
-import com.example.movieapp.mvp.view.image.IImageLoader;
+import com.example.movieapp.mvp.model.base.TagConstants;
+import com.example.movieapp.mvp.presenter.title.PosterPresenter;
+import com.example.movieapp.mvp.view.title.IPosterView;
+import com.example.movieapp.utils.image.GlideImageLoader;
+import com.example.movieapp.utils.image.IImageLoader;
 import com.example.movieapp.ui.BackButtonListener;
 
 import moxy.MvpAppCompatFragment;
@@ -60,7 +60,7 @@ public class PosterFragment extends MvpAppCompatFragment implements IPosterView,
     }
 
     private String getImageUrl() {
-        return getArguments().getString(Tags.POSTER_TAG);
+        return getArguments().getString(TagConstants.POSTER_TAG);
     }
 
     @Override
