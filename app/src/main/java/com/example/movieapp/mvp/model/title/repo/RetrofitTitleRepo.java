@@ -11,8 +11,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RetrofitTitleRepo implements ITitleRepo, ILogger {
 
-    private static final String TAG = RetrofitTitleRepo.class.getSimpleName();
-
     private final IDataSource api;
     private final INetworkStatus networkStatus;
     private final ITitleCache cache;
@@ -25,7 +23,7 @@ public class RetrofitTitleRepo implements ITitleRepo, ILogger {
 
     @Override
     public Single<Title> getTitle(String id) {
-        showVerboseLog(TAG, "getTitle");
+        showVerboseLog(this, "getTitle");
 
         return networkStatus.isOnlineSingle().flatMap((isOnline) -> {
             if (isOnline) {

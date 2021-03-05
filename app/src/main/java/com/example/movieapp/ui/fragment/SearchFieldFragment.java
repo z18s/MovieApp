@@ -22,8 +22,6 @@ import moxy.presenter.InjectPresenter;
 
 public class SearchFieldFragment extends MvpAppCompatFragment implements ISearchFieldView, ILogger, BackButtonListener {
 
-    private static final String TAG = SearchFieldFragment.class.getSimpleName();
-
     private View view;
     private SearchView searchView;
     private Button button;
@@ -35,7 +33,7 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search_field, container, false);
-        showVerboseLog(TAG, "onCreateView");
+        showVerboseLog(this, "onCreateView");
         return view;
     }
 
@@ -45,7 +43,7 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
         searchView.setIconifiedByDefault(false);
         button = view.findViewById(R.id.button_search);
         initListeners();
-        showVerboseLog(TAG, "init");
+        showVerboseLog(this, "init");
     }
 
     private void initListeners() {

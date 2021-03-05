@@ -19,14 +19,12 @@ import com.example.movieapp.utils.image.IImageLoader;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.ViewHolder> implements ILogger {
 
-    private static final String TAG = SearchResultAdapter.class.getSimpleName();
-
     private final ISearchListPresenter presenter;
     private static final IImageLoader<ImageView> imageLoader = new GlideImageLoader();
 
     public SearchResultAdapter(ISearchListPresenter presenter) {
         this.presenter = presenter;
-        showVerboseLog(TAG, "constructor");
+        showVerboseLog(this, "constructor");
     }
 
     @NonNull

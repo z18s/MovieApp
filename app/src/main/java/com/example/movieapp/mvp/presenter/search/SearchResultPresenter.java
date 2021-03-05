@@ -25,8 +25,6 @@ import ru.terrakok.cicerone.Router;
 
 public class SearchResultPresenter extends MvpPresenter<ISearchResultView> implements ILogger {
 
-    private static final String TAG = SearchResultPresenter.class.getSimpleName();
-
     @Inject
     Scheduler scheduler;
     @Inject
@@ -49,7 +47,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
         @Override
         public void onItemClick(ISearchResultItemView view) {
             int index = view.getPos();
-            showVerboseLog(TAG, "TitlesListPresenter.onItemClick - " + index);
+            showVerboseLog(this, "TitlesListPresenter.onItemClick - " + index);
             SearchResult searchResult = searchResults.get(index);
             if (!searchResult.getNameString().equals(noResult)) {
                 router.navigateTo(new Screens.TitleScreen(searchResult));
@@ -77,7 +75,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
     }
 
     private void setRecyclerData(ISearchResultItemView view, SearchResult searchResult) {
-        showVerboseLog(TAG, "setRecyclerData");
+        showVerboseLog(this, "setRecyclerData");
         searchResult.getName().subscribe(new Observer<String>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -89,7 +87,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
                 view.loadImage(searchResult.getImageUrl());
                 view.setType(searchResult.getType());
                 view.setYear(searchResult.getYear());
-                showVerboseLog(TAG, "setRecyclerData.onNext - " + name);
+                showVerboseLog(this, "setRecyclerData.onNext - " + name);
             }
 
             @Override
@@ -104,21 +102,21 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
 
     @UiThread
     private void setData() {
-        showVerboseLog(TAG, "setData");
+        showVerboseLog(this, "setData");
         searchRepo.getSearch(query).observeOn(scheduler).subscribe(
                 (titles) -> {
                     titlesListPresenter.searchResults.clear();
-                    showVerboseLog(TAG, "setData.onNext - " + titles.getList());
+                    showVerboseLog(this, "setData.onNext - " + titles.getList());
                     if (titles.getList() == null) {
                         titlesListPresenter.searchResults.add(new SearchResult(noResult));
                     } else {
-                        showVerboseLog(TAG, "setData.onNext - " + titles.getList().size());
+                        showVerboseLog(this, "setData.onNext - " + titles.getList().size());
                         titlesListPresenter.searchResults.addAll(titles.getList());
                     }
                     getViewState().updateData();
                 },
                 (e) -> {
-                    showVerboseLog(TAG, "setData.onError - " + e.getMessage());
+                    showVerboseLog(this, "setData.onError - " + e.getMessage());
                 }
         );
         getViewState().updateData();

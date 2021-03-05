@@ -24,8 +24,6 @@ import moxy.presenter.ProvidePresenter;
 
 public class SearchResultFragment extends MvpAppCompatFragment implements ISearchResultView, ILogger, BackButtonListener {
 
-    private static final String TAG = SearchResultFragment.class.getSimpleName();
-
     private View view;
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
@@ -43,7 +41,7 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search_result, container, false);
         recyclerView = view.findViewById(R.id.rv_titles);
-        showVerboseLog(TAG, "onCreateView");
+        showVerboseLog(this, "onCreateView");
         return view;
     }
 
@@ -53,7 +51,7 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
         adapter = new SearchResultAdapter(presenter.getPresenter());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        showVerboseLog(TAG, "init");
+        showVerboseLog(this, "init");
     }
 
     private String getQuery() {

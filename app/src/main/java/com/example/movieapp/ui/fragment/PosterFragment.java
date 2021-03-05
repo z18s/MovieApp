@@ -24,8 +24,6 @@ import moxy.presenter.ProvidePresenter;
 
 public class PosterFragment extends MvpAppCompatFragment implements IPosterView, ILogger, BackButtonListener {
 
-    private static final String TAG = PosterFragment.class.getSimpleName();
-
     private static final IImageLoader<ImageView> imageLoader = new GlideImageLoader();
 
     private View view;
@@ -43,19 +41,19 @@ public class PosterFragment extends MvpAppCompatFragment implements IPosterView,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_poster, container, false);
-        showVerboseLog(TAG, "onCreateView");
+        showVerboseLog(this, "onCreateView");
         return view;
     }
 
     @Override
     public void init() {
-        showVerboseLog(TAG, "init");
+        showVerboseLog(this, "init");
         posterImageView = view.findViewById(R.id.image_poster);
     }
 
     @Override
     public void setImage(String imageUrl) {
-        showVerboseLog(TAG, "setData");
+        showVerboseLog(this, "setData");
         imageLoader.loadImage(imageUrl, posterImageView);
     }
 

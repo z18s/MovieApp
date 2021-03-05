@@ -20,8 +20,6 @@ import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 
 public class MainActivity extends MvpAppCompatActivity implements IMainView, ILogger {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
     @Inject
     NavigatorHolder navigatorHolder;
     Navigator navigator = new SupportAppNavigator(this, getSupportFragmentManager(), R.id.container);
@@ -34,21 +32,21 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView, ILo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MovieApp.instance.getAppComponent().inject(this);
-        showVerboseLog(TAG, "onCreate");
+        showVerboseLog(this, "onCreate");
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         navigatorHolder.setNavigator(navigator);
-        showVerboseLog(TAG, "onResumeFragments");
+        showVerboseLog(this, "onResumeFragments");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         navigatorHolder.removeNavigator();
-        showVerboseLog(TAG, "onPause");
+        showVerboseLog(this, "onPause");
     }
 
     @Override

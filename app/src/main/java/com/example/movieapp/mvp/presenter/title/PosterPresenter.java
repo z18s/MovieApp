@@ -11,8 +11,6 @@ import ru.terrakok.cicerone.Router;
 
 public class PosterPresenter extends MvpPresenter<IPosterView> implements ILogger {
 
-    private static final String TAG = PosterPresenter.class.getSimpleName();
-
     @Inject
     Router router;
 
@@ -31,7 +29,7 @@ public class PosterPresenter extends MvpPresenter<IPosterView> implements ILogge
     }
 
     private void setData() {
-        showVerboseLog(TAG, "setData");
+        showVerboseLog(this, "setData");
         getViewState().setImage(imageUrl);
     }
 

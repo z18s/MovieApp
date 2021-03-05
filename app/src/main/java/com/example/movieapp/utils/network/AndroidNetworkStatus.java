@@ -16,8 +16,6 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class AndroidNetworkStatus implements INetworkStatus, ILogger {
 
-    private static final String TAG = AndroidNetworkStatus.class.getSimpleName();
-
     private BehaviorSubject<Boolean> statusObject = BehaviorSubject.create();
 
     public AndroidNetworkStatus() {
@@ -32,21 +30,21 @@ public class AndroidNetworkStatus implements INetworkStatus, ILogger {
             @Override
             public void onAvailable(@NonNull Network network) {
                 super.onAvailable(network);
-                showVerboseLog(TAG, "onAvailable");
+                showVerboseLog(this, "onAvailable");
                 statusObject.onNext(true);
             }
 
             @Override
             public void onUnavailable() {
                 super.onUnavailable();
-                showVerboseLog(TAG, "onUnavailable");
+                showVerboseLog(this, "onUnavailable");
                 statusObject.onNext(false);
             }
 
             @Override
             public void onLost(@NonNull Network network) {
                 super.onLost(network);
-                showVerboseLog(TAG, "onLost");
+                showVerboseLog(this, "onLost");
                 statusObject.onNext(false);
             }
         });

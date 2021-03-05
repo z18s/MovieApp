@@ -27,8 +27,6 @@ import moxy.presenter.ProvidePresenter;
 
 public class TitleFragment extends MvpAppCompatFragment implements ITitleView, ILogger, BackButtonListener {
 
-    private static final String TAG = TitleFragment.class.getSimpleName();
-
     private static final IImageLoader<ImageView> imageLoader = new GlideImageLoader();
 
     private View view;
@@ -53,13 +51,13 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_title, container, false);
-        showVerboseLog(TAG, "onCreateView");
+        showVerboseLog(this, "onCreateView");
         return view;
     }
 
     @Override
     public void init() {
-        showVerboseLog(TAG, "init");
+        showVerboseLog(this, "init");
         nameTextView = view.findViewById(R.id.name_title);
         posterImageView = view.findViewById(R.id.poster_title);
         typeTextView = view.findViewById(R.id.type_title);
@@ -79,7 +77,7 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
 
     @Override
     public void setData(String name, String imageUrl, String type, String year, String country, String director, String rating, String plot) {
-        showVerboseLog(TAG, "setData.nameTextView = " + nameTextView);
+        showVerboseLog(this, "setData.nameTextView = " + nameTextView);
         nameTextView.setText(name);
         imageLoader.loadImage(imageUrl, posterImageView);
         typeTextView.setText(type);

@@ -11,8 +11,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RetrofitSearchRepo implements ISearchRepo, ILogger {
 
-    private static final String TAG = RetrofitSearchRepo.class.getSimpleName();
-
     private final IDataSource api;
     private final INetworkStatus networkStatus;
     private final ISearchCache cache;
@@ -25,7 +23,7 @@ public class RetrofitSearchRepo implements ISearchRepo, ILogger {
 
     @Override
     public Single<Search> getSearch(String query) {
-        showVerboseLog(TAG, "getSearch");
+        showVerboseLog(this, "getSearch");
 
         return networkStatus.isOnlineSingle().flatMap((isOnline) -> {
             if (isOnline) {

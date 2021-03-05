@@ -7,21 +7,21 @@ public interface ILogger {
     boolean DEBUG_RUNNING = false;
     boolean INFO_RUNNING = false;
 
-    default void showVerboseLog(String tag, String message) {
+    default void showVerboseLog(Object object, String message) {
         if (VERBOSE_RUNNING) {
-            Log.v(tag, message);
+            Log.v(object.getClass().getSimpleName(), message);
         }
     }
 
-    default void showDebugLog(String tag, String message) {
+    default void showDebugLog(Object object, String message) {
         if (DEBUG_RUNNING) {
-            Log.d(tag, message);
+            Log.d(object.getClass().getSimpleName(), message);
         }
     }
 
-    default void showInfoLog(String tag, String message) {
+    default void showInfoLog(Object object, String message) {
         if (INFO_RUNNING) {
-            Log.i(tag, message);
+            Log.i(object.getClass().getSimpleName(), message);
         }
     }
 }

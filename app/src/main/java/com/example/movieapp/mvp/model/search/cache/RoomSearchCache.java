@@ -16,8 +16,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RoomSearchCache implements ISearchCache, ILogger {
 
-    private static final String TAG = RoomSearchCache.class.getSimpleName();
-
     private final Database db;
 
     public RoomSearchCache(Database db) {
@@ -26,7 +24,7 @@ public class RoomSearchCache implements ISearchCache, ILogger {
 
     @Override
     public Single<Search> getSearch(String query) {
-        showVerboseLog(TAG, "getSearch");
+        showVerboseLog(this, "getSearch");
         return Single.fromCallable(() -> {
 
             RoomSearch roomSearch = db.searchDao().findByQuery(query);
@@ -45,7 +43,7 @@ public class RoomSearchCache implements ISearchCache, ILogger {
 
     @Override
     public Completable putSearch(String query, Search search) {
-        showVerboseLog(TAG, "putSearch");
+        showVerboseLog(this, "putSearch");
         return Completable.fromAction(() -> {
 
             List<String> ids = new ArrayList<>();
@@ -64,7 +62,7 @@ public class RoomSearchCache implements ISearchCache, ILogger {
     }
 
     private SearchResult getTitle(String id) {
-        showVerboseLog(TAG, "getTitle");
+        showVerboseLog(this, "getTitle");
 
         RoomSearchResult roomSearchResult = db.searchResultDao().findById(id);
 
@@ -78,7 +76,7 @@ public class RoomSearchCache implements ISearchCache, ILogger {
     }
 
     private void putTitle(SearchResult searchResult) {
-        showVerboseLog(TAG, "putTitle");
+        showVerboseLog(this, "putTitle");
 
         db.searchResultDao().insert(new RoomSearchResult(
                 searchResult.getId(),

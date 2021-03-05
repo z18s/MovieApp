@@ -15,8 +15,6 @@ import ru.terrakok.cicerone.Router;
 
 public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger {
 
-    private static final String TAG = TitlePresenter.class.getSimpleName();
-
     @Inject
     Scheduler scheduler;
     @Inject
@@ -46,7 +44,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
     }
 
     private void setData() {
-        showVerboseLog(TAG, "setData");
+        showVerboseLog(this, "setData");
         titleRepo.getTitle(searchResult.getId()).observeOn(scheduler).subscribe(
                 (title) -> {
                     getViewState().setData(
@@ -62,7 +60,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
                     imageUrl = title.getImageUrl();
                 },
                 (e) -> {
-                    showVerboseLog(TAG, "setData.onError " + e.getMessage());
+                    showVerboseLog(this, "setData.onError " + e.getMessage());
                 }
         );
     }
