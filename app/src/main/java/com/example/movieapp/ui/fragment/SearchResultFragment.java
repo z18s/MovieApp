@@ -40,7 +40,7 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search_result, container, false);
-        recyclerView = view.findViewById(R.id.rv_titles);
+        recyclerView = view.findViewById(R.id.rv_search_result);
         showVerboseLog(this, "onCreateView");
         return view;
     }

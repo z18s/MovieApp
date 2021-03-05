@@ -40,8 +40,7 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
     @Override
     public void init() {
         searchView = view.findViewById(R.id.sv_search);
-        searchView.setIconifiedByDefault(false);
-        button = view.findViewById(R.id.button_search);
+        button = view.findViewById(R.id.btn_search);
         initListeners();
         showVerboseLog(this, "init");
     }

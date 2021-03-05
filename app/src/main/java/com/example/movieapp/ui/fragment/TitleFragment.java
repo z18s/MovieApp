@@ -58,14 +58,14 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
     @Override
     public void init() {
         showVerboseLog(this, "init");
-        nameTextView = view.findViewById(R.id.name_title);
-        posterImageView = view.findViewById(R.id.poster_title);
-        typeTextView = view.findViewById(R.id.type_title);
-        yearTextView = view.findViewById(R.id.year_title);
-        countryTextView = view.findViewById(R.id.country_title);
-        directorTextView = view.findViewById(R.id.director_title);
-        ratingTextView = view.findViewById(R.id.rating_title);
-        plotTextView = view.findViewById(R.id.plot_title);
+        nameTextView = view.findViewById(R.id.tv_title_name);
+        posterImageView = view.findViewById(R.id.tv_title_poster);
+        typeTextView = view.findViewById(R.id.tv_title_type);
+        yearTextView = view.findViewById(R.id.tv_title_year);
+        countryTextView = view.findViewById(R.id.tv_title_country);
+        directorTextView = view.findViewById(R.id.tv_title_director);
+        ratingTextView = view.findViewById(R.id.tv_title_rating);
+        plotTextView = view.findViewById(R.id.tv_title_plot);
         initListeners();
     }
 

@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Search -->
+    <!-- Search Field -->
     <dimen name="search_main_text_size">18sp</dimen>
 
-    <!-- List -->
-    <dimen name="list_text_size">10sp</dimen>
-    <dimen name="list_title_size">18sp</dimen>
+    <!-- Search Result -->
+    <dimen name="search_result_title_size">18sp</dimen>
+    <dimen name="search_result_text_size">10sp</dimen>
+
+    <dimen name="search_result_item_height">100dp</dimen>
+    <dimen name="search_result_image_width">60dp</dimen>
+    <dimen name="search_result_image_height">90dp</dimen>
+
+    <dimen name="search_result_padding">16dp</dimen>
+    <dimen name="search_result_image_margin">5dp</dimen>
+    <dimen name="search_result_title_margin_start">75dp</dimen>
+    <dimen name="search_result_title_margin_top">5dp</dimen>
+    <dimen name="search_result_text_margin_start">10dp</dimen>
+    <dimen name="search_result_text_margin_bottom">5dp</dimen>
 
     <!-- Title -->
     <dimen name="title_name_size">20sp</dimen>

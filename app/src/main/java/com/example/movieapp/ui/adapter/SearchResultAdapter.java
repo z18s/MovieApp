@@ -32,7 +32,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View titleView = inflater.inflate(R.layout.item_title, parent, false);
+        View titleView = inflater.inflate(R.layout.item_search_result, parent, false);
         return new ViewHolder(titleView);
     }
 
@@ -60,10 +60,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            nameView = itemView.findViewById(R.id.titles_item_name);
-            imageView = itemView.findViewById(R.id.titles_item_image);
-            typeView = itemView.findViewById(R.id.titles_item_type);
-            yearView = itemView.findViewById(R.id.titles_item_year);
+            nameView = itemView.findViewById(R.id.tv_search_result_item_name);
+            imageView = itemView.findViewById(R.id.iv_search_result_item_pic);
+            typeView = itemView.findViewById(R.id.tv_search_result_item_type);
+            yearView = itemView.findViewById(R.id.tv_search_result_item_year);
         }
 
         @Override

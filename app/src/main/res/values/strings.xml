@@ -3,11 +3,12 @@
     <!-- App -->
     <string name="app_name">MovieApp</string>
 
-    <!-- Search -->
-    <string name="search_main_text">Enter a movie name:</string>
+    <!-- Search Field -->
+    <string name="search_main_text">Movie, Series &amp; Game Browser</string>
+    <string name="search_hint_text">Enter a movie name</string>
     <string name="search_button_text">Search</string>
 
-    <!-- List -->
+    <!-- Search Result -->
     <string name="poster_text">Poster</string>
 
     <!-- Title -->
