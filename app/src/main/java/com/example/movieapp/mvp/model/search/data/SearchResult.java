@@ -38,14 +38,6 @@ public class SearchResult implements Parcelable {
         this.imageUrl = imageUrl;
     }
 
-    public SearchResult(String name) {
-        this.name = name;
-        id = null;
-        type = null;
-        year = null;
-        imageUrl = null;
-    }
-
     protected SearchResult(Parcel in) {
         id = in.readString();
         name = in.readString();

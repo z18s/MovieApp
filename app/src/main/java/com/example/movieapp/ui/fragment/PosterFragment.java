@@ -47,7 +47,11 @@ public class PosterFragment extends MvpAppCompatFragment implements IPosterView,
 
     @Override
     public void init() {
+        initViews();
         showVerboseLog(this, "init");
+    }
+
+    private void initViews() {
         posterImageView = view.findViewById(R.id.iv_poster_pic);
     }
 

@@ -6,5 +6,5 @@ import moxy.viewstate.strategy.alias.AddToEndSingle;
 @AddToEndSingle
 public interface ISearchResultView extends MvpView {
     void init();
-    void updateData();
+    void updateResultData();
 }

@@ -9,8 +9,10 @@
     <string name="search_button_text">Search</string>
 
     <!-- Search Result -->
-    <string name="poster_text">Poster</string>
 
     <!-- Title -->
+
+    <!-- Poster -->
+    <string name="poster_description">Poster</string>
 
 </resources>

@@ -12,7 +12,7 @@
         android:layout_width="@dimen/search_result_image_width"
         android:layout_height="@dimen/search_result_image_height"
         android:layout_margin="@dimen/search_result_image_margin"
-        android:contentDescription="@string/poster_text"
+        android:contentDescription="@string/poster_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

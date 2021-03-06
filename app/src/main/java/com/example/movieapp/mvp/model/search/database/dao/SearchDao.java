@@ -37,4 +37,7 @@ public interface SearchDao {
 
     @Query("SELECT * FROM searches WHERE search_query = :query")
     RoomSearch findByQuery(String query);
+
+    @Query("SELECT * FROM searches WHERE search_query LIKE :chars ORDER BY search_query")
+    List<RoomSearch> findByChars(String chars);
 }

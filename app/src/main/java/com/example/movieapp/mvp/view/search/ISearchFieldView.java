@@ -7,4 +7,5 @@ import moxy.viewstate.strategy.alias.AddToEndSingle;
 public interface ISearchFieldView extends MvpView {
     void init();
     void release();
+    void updateHistoryList();
 }

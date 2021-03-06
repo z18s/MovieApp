@@ -45,6 +45,7 @@ public class ApiModule {
                 .create(IDataSource.class);
     }
 
+    @Singleton
     @Provides
     INetworkStatus networkStatus() {
         return new AndroidNetworkStatus();

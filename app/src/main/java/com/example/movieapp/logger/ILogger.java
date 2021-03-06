@@ -3,7 +3,7 @@ package com.example.movieapp.logger;
 import android.util.Log;
 
 public interface ILogger {
-    boolean VERBOSE_RUNNING = false;
+    boolean VERBOSE_RUNNING = true;
     boolean DEBUG_RUNNING = false;
     boolean INFO_RUNNING = false;
 

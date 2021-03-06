@@ -22,11 +22,13 @@ import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+
 public class SearchResultFragment extends MvpAppCompatFragment implements ISearchResultView, ILogger, BackButtonListener {
 
     private View view;
-    private RecyclerView recyclerView;
-    private SearchResultAdapter adapter;
+    private RecyclerView resultRecyclerView;
+    private SearchResultAdapter resultAdapter;
 
     @InjectPresenter
     SearchResultPresenter presenter;
@@ -40,28 +42,32 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_search_result, container, false);
-        recyclerView = view.findViewById(R.id.rv_search_result);
+        resultRecyclerView = view.findViewById(R.id.rv_search_result);
         showVerboseLog(this, "onCreateView");
         return view;
     }
 
     @Override
     public void init() {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        adapter = new SearchResultAdapter(presenter.getPresenter());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        initViews();
         showVerboseLog(this, "init");
+    }
+
+    private void initViews() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+        resultAdapter = new SearchResultAdapter(presenter.getSearchListPresenter());
+        resultRecyclerView.setLayoutManager(layoutManager);
+        resultRecyclerView.setAdapter(resultAdapter);
     }
 
     private String getQuery() {
         String result = getArguments().getString(TagConstants.QUERY_TAG);
-        return (result != null) ? result : "";
+        return (result != null) ? result : EMPTY_STRING;
     }
 
     @Override
-    public void updateData() {
-        adapter.notifyDataSetChanged();
+    public void updateResultData() {
+        resultAdapter.notifyDataSetChanged();
     }
 
     @Override

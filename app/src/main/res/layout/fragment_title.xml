@@ -14,7 +14,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/title_start_less_margin_size"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -23,6 +22,7 @@
                 android:id="@+id/tv_title_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/title_margin_start_less"
                 android:textSize="@dimen/title_name_size"
                 tools:text="Name" />
 
@@ -30,16 +30,16 @@
                 android:id="@+id/tv_title_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_start_more_margin_size"
-                android:layout_marginTop="@dimen/title_top_less_margin_size"
+                android:layout_marginStart="@dimen/title_margin_start_more"
+                android:layout_marginTop="@dimen/title_margin_top_less"
                 android:textSize="@dimen/title_type_size"
                 tools:text="Type" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_start_more_margin_size"
-                android:layout_marginTop="@dimen/title_top_less_margin_size"
+                android:layout_marginStart="@dimen/title_margin_start_more"
+                android:layout_marginTop="@dimen/title_margin_top_less"
                 android:orientation="horizontal">
 
                 <TextView
@@ -53,7 +53,7 @@
                     android:id="@+id/tv_title_country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_start_more_margin_size"
+                    android:layout_marginStart="@dimen/title_margin_start_more"
                     android:textSize="@dimen/title_country_size"
                     tools:text="Country" />
 
@@ -63,8 +63,8 @@
                 android:id="@+id/tv_title_director"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_start_more_margin_size"
-                android:layout_marginTop="@dimen/title_top_less_margin_size"
+                android:layout_marginStart="@dimen/title_margin_start_more"
+                android:layout_marginTop="@dimen/title_margin_top_less"
                 android:textSize="@dimen/title_director_size"
                 tools:text="Director" />
 
@@ -72,8 +72,8 @@
                 android:id="@+id/tv_title_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_start_more_margin_size"
-                android:layout_marginTop="@dimen/title_top_less_margin_size"
+                android:layout_marginStart="@dimen/title_margin_start_more"
+                android:layout_marginTop="@dimen/title_margin_top_less"
                 android:textSize="@dimen/title_rating_size"
                 tools:text="Rating" />
 
@@ -83,10 +83,10 @@
             android:id="@+id/tv_title_poster"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/title_start_less_margin_size"
-            android:layout_marginTop="@dimen/title_top_more_margin_size"
-            android:layout_marginEnd="@dimen/title_start_less_margin_size"
-            android:contentDescription="@string/poster_text"
+            android:layout_marginStart="@dimen/title_margin_start_less"
+            android:layout_marginTop="@dimen/title_margin_top_more"
+            android:layout_marginEnd="@dimen/title_margin_start_less"
+            android:contentDescription="@string/poster_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -96,9 +96,9 @@
         android:id="@+id/tv_title_plot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/title_start_less_margin_size"
-        android:layout_marginTop="@dimen/title_top_more_margin_size"
-        android:layout_marginEnd="@dimen/title_start_less_margin_size"
+        android:layout_marginStart="@dimen/title_margin_start_more"
+        android:layout_marginTop="@dimen/title_margin_top_more"
+        android:layout_marginEnd="@dimen/title_margin_start_less"
         android:textSize="@dimen/title_plot_size"
         tools:text="Plot" />
 

@@ -1,7 +1,5 @@
 package com.example.movieapp.mvp.presenter.search;
 
-import androidx.annotation.UiThread;
-
 import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.search.data.SearchResult;
@@ -23,6 +21,9 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+import static com.example.movieapp.mvp.model.base.SearchConstants.NO_RESULT;
+
 public class SearchResultPresenter extends MvpPresenter<ISearchResultView> implements ILogger {
 
     @Inject
@@ -34,12 +35,12 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
 
     private final String query;
 
-    private final String noResult = "- No Result -";
-
     public SearchResultPresenter(String query) {
         this.query = query;
         MovieApp.instance.getSearchSubcomponent().inject(this);
     }
+
+    private final SearchResultListPresenter searchResultListPresenter = new SearchResultListPresenter();
 
     private class SearchResultListPresenter implements ISearchListPresenter {
         private final List<SearchResult> searchResults = new ArrayList<>();
@@ -47,9 +48,9 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
         @Override
         public void onItemClick(ISearchResultItemView view) {
             int index = view.getPos();
-            showVerboseLog(this, "TitlesListPresenter.onItemClick - " + index);
+            showVerboseLog(this, "onItemClick - " + index);
             SearchResult searchResult = searchResults.get(index);
-            if (!searchResult.getNameString().equals(noResult)) {
+            if (!searchResult.getNameString().equals(NO_RESULT)) {
                 router.navigateTo(new Screens.TitleScreen(searchResult));
             }
         }
@@ -65,6 +66,10 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
         public int getCount() {
             return searchResults.size();
         }
+    }
+
+    public ISearchListPresenter getSearchListPresenter() {
+        return searchResultListPresenter;
     }
 
     @Override
@@ -100,32 +105,33 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
         });
     }
 
-    @UiThread
     private void setData() {
         showVerboseLog(this, "setData");
-        searchRepo.getSearch(query).observeOn(scheduler).subscribe(
-                (titles) -> {
-                    titlesListPresenter.searchResults.clear();
-                    showVerboseLog(this, "setData.onNext - " + titles.getList());
-                    if (titles.getList() == null) {
-                        titlesListPresenter.searchResults.add(new SearchResult(noResult));
-                    } else {
-                        showVerboseLog(this, "setData.onNext - " + titles.getList().size());
-                        titlesListPresenter.searchResults.addAll(titles.getList());
+        searchResultListPresenter.searchResults.clear();
+        if (query.equals(EMPTY_STRING)) {
+            searchResultListPresenter.searchResults.add(getEmptySearchResult());
+        } else {
+            searchRepo.getSearch(query).observeOn(scheduler).subscribe(
+                    (search) -> {
+                        if (search.getList() != null && search.getList().size() != 0) {
+                            showVerboseLog(this, "setData.onNext - (" + search.getList().size() + "): " + search.getList());
+                            searchResultListPresenter.searchResults.addAll(search.getList());
+                        } else {
+                            showVerboseLog(this, "setData.onNext - EmptySearchResult");
+                            searchResultListPresenter.searchResults.add(getEmptySearchResult());
+                        }
+                        getViewState().updateResultData();
+                    },
+                    (e) -> {
+                        showVerboseLog(this, "setData.onError - " + e.getMessage());
                     }
-                    getViewState().updateData();
-                },
-                (e) -> {
-                    showVerboseLog(this, "setData.onError - " + e.getMessage());
-                }
-        );
-        getViewState().updateData();
+            );
+        }
+        getViewState().updateResultData();
     }
 
-    private final SearchResultListPresenter titlesListPresenter = new SearchResultListPresenter();
-
-    public ISearchListPresenter getPresenter() {
-        return titlesListPresenter;
+    private SearchResult getEmptySearchResult() {
+        return new SearchResult(EMPTY_STRING, NO_RESULT, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
     }
 
     public boolean backPressed() {

@@ -38,7 +38,7 @@ public class RoomSearchCache implements ISearchCache, ILogger {
             }
 
             return new Search(searchResults);
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
     @Override
