@@ -1,14 +1,18 @@
 package com.example.movieapp.mvp.model.search.data;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 import io.reactivex.rxjava3.core.Observable;
 
-public class SearchResult implements Parcelable {
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+import static com.example.movieapp.mvp.model.base.SearchConstants.NO_RESULT;
+
+public class SearchResult {
 
     @SerializedName("imdbID")
     @Expose
@@ -38,40 +42,6 @@ public class SearchResult implements Parcelable {
         this.imageUrl = imageUrl;
     }
 
-    protected SearchResult(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-        type = in.readString();
-        year = in.readString();
-        imageUrl = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(type);
-        dest.writeString(year);
-        dest.writeString(imageUrl);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<SearchResult> CREATOR = new Creator<SearchResult>() {
-        @Override
-        public SearchResult createFromParcel(Parcel in) {
-            return new SearchResult(in);
-        }
-
-        @Override
-        public SearchResult[] newArray(int size) {
-            return new SearchResult[size];
-        }
-    };
-
     public String getId() {
         return id;
     }
@@ -94,5 +64,29 @@ public class SearchResult implements Parcelable {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public static class EmptySearchResult extends SearchResult {
+
+        public EmptySearchResult() {
+            super(EMPTY_STRING, NO_RESULT, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, name);
+        }
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            if (obj == null || obj.getClass() != this.getClass()) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            EmptySearchResult that = (EmptySearchResult) obj;
+            return (that.getId().equals(EMPTY_STRING) && that.getNameString().equals(NO_RESULT));
+        }
     }
 }

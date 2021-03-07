@@ -24,6 +24,15 @@
     <dimen name="search_result_text_margin_start">10dp</dimen>
     <dimen name="search_result_text_margin_bottom">5dp</dimen>
 
+    <!-- Favorites -->
+    <dimen name="favorites_item_title_size">18sp</dimen>
+    <dimen name="favorites_item_text_size">10sp</dimen>
+
+    <dimen name="favorites_item_height">50dp</dimen>
+
+    <dimen name="favorites_padding">16dp</dimen>
+    <dimen name="favorites_item_title_margin_start">20dp</dimen>
+
     <!-- Title -->
     <dimen name="title_name_size">20sp</dimen>
     <dimen name="title_type_size">12sp</dimen>
@@ -33,9 +42,13 @@
     <dimen name="title_rating_size">15sp</dimen>
     <dimen name="title_plot_size">17sp</dimen>
 
+    <dimen name="title_poster_width">150dp</dimen>
+    <dimen name="title_star_width">30dp</dimen>
+
     <dimen name="title_margin_top_less">10dp</dimen>
-    <dimen name="title_margin_top_more">35dp</dimen>
+    <dimen name="title_margin_top_more">40dp</dimen>
     <dimen name="title_margin_start_less">5dp</dimen>
-    <dimen name="title_margin_start_more">25dp</dimen>
+    <dimen name="title_margin_start_more">20dp</dimen>
+    <dimen name="title_margin_end_less">5dp</dimen>
 
 </resources>

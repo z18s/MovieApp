@@ -1,7 +1,14 @@
 package com.example.movieapp.mvp.model.title.data;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Objects;
+
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+import static com.example.movieapp.mvp.model.base.SearchConstants.NO_FAVORITES;
 
 public class Title {
 
@@ -41,7 +48,10 @@ public class Title {
     @Expose
     String plot;
 
-    public Title(String id, String name, String imageUrl, String type, String year, String country, String director, String rating, String plot) {
+    @SerializedName("FavoriteStatus")
+    boolean favoriteStatus;
+
+    public Title(String id, String name, String imageUrl, String type, String year, String country, String director, String rating, String plot, boolean favoriteStatus) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -51,6 +61,7 @@ public class Title {
         this.director = director;
         this.rating = rating;
         this.plot = plot;
+        this.favoriteStatus = favoriteStatus;
     }
 
     public String getId() {
@@ -87,5 +98,37 @@ public class Title {
 
     public String getPlot() {
         return plot;
+    }
+
+    public boolean isFavorite() {
+        return favoriteStatus;
+    }
+
+    public void setFavorite(boolean favoriteStatus) {
+        this.favoriteStatus = favoriteStatus;
+    }
+
+    public static class EmptyTitle extends Title {
+
+        public EmptyTitle() {
+            super(EMPTY_STRING, NO_FAVORITES, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, false);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, name);
+        }
+
+        @Override
+        public boolean equals(@Nullable Object obj) {
+            if (obj == null || obj.getClass() != this.getClass()) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            EmptyTitle that = (EmptyTitle) obj;
+            return (that.getId().equals(EMPTY_STRING) && that.getName().equals(NO_FAVORITES));
+        }
     }
 }

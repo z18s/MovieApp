@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/favorites_item_height"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/tv_favorites_item_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/favorites_item_title_margin_start"
+        android:layout_weight="0.6"
+        android:textSize="@dimen/favorites_item_title_size"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/tv_favorites_item_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:textSize="@dimen/favorites_item_text_size"
+        tools:text="Year" />
+
+    <TextView
+        android:id="@+id/tv_favorites_item_country"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:textSize="@dimen/search_result_text_size"
+        tools:text="Country" />
+
+</LinearLayout>

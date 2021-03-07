@@ -1,14 +1,19 @@
 package com.example.movieapp.mvp.model.title.cache;
 
+import com.example.movieapp.logger.ILogger;
+import com.example.movieapp.mvp.model.title.database.RoomFavorites;
 import com.example.movieapp.mvp.model.title.database.RoomTitle;
 import com.example.movieapp.mvp.model.title.data.Title;
 import com.example.movieapp.mvp.model.base.database.Database;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class RoomTitleCache implements ITitleCache {
+public class RoomTitleCache implements ITitleCache, ILogger {
 
     private final Database db;
 
@@ -19,8 +24,10 @@ public class RoomTitleCache implements ITitleCache {
     @Override
     public Single<Title> getTitle(String id) {
         return Single.fromCallable(() -> {
+            showVerboseLog(this, "getTitle");
 
             RoomTitle roomTitle = db.titleDao().findById(id);
+            boolean favoriteStatus = getFavoriteStatus(id).blockingGet();
 
             return new Title(
                     roomTitle.getId(),
@@ -31,14 +38,16 @@ public class RoomTitleCache implements ITitleCache {
                     roomTitle.getCountry(),
                     roomTitle.getDirector(),
                     roomTitle.getRating(),
-                    roomTitle.getPlot()
+                    roomTitle.getPlot(),
+                    favoriteStatus
             );
-        });
+        }).subscribeOn(Schedulers.io());
     }
 
     @Override
     public Completable putTitle(Title title) {
         return Completable.fromAction(() -> {
+            showVerboseLog(this, "putTitle");
 
             db.titleDao().insert(new RoomTitle(
                     title.getId(),
@@ -51,6 +60,51 @@ public class RoomTitleCache implements ITitleCache {
                     title.getRating(),
                     title.getPlot()
             ));
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Single<List<Title>> getFavorites() {
+        return Single.fromCallable(() -> {
+            showVerboseLog(this, "getFavorites");
+
+            List<RoomFavorites> roomFavorites = db.favoritesDao().getAll();
+            List<Title> favoritesTitles = new ArrayList<>();
+
+            for (RoomFavorites roomFavorite: roomFavorites) {
+                Title favoritesTitle = getTitle(roomFavorite.getId()).blockingGet();
+                favoritesTitles.add(favoritesTitle);
+            }
+
+            return favoritesTitles;
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Single<Boolean> getFavoriteStatus(String id) {
+        return Single.fromCallable(() -> {
+            showVerboseLog(this, "getFavoriteStatus");
+
+            return db.favoritesDao().isTitleExists(id);
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable putFavorite(String id) {
+        return Completable.fromAction(() -> {
+            showVerboseLog(this, "putFavorite");
+
+            db.favoritesDao().insert(new RoomFavorites(id));
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable deleteFavorite(String id) {
+        return Completable.fromAction(() -> {
+            showVerboseLog(this, "deleteFavorite");
+
+            RoomFavorites roomFavorites = new RoomFavorites(id);
+            db.favoritesDao().delete(roomFavorites);
         }).subscribeOn(Schedulers.io());
     }
 }

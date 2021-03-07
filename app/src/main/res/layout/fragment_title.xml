@@ -7,22 +7,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/title_margin_top_less"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginStart="@dimen/title_margin_start_less"
+            android:layout_weight="0.7"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_title_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_margin_start_less"
                 android:textSize="@dimen/title_name_size"
                 tools:text="Name" />
 
@@ -79,18 +82,32 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/tv_title_poster"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/title_margin_start_less"
-            android:layout_marginTop="@dimen/title_margin_top_more"
-            android:layout_marginEnd="@dimen/title_margin_start_less"
-            android:contentDescription="@string/poster_description"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginEnd="@dimen/title_margin_end_less"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/iv_title_favorite"
+                android:layout_width="@dimen/title_star_width"
+                android:layout_height="@dimen/title_star_width"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/title_margin_start_less"
+                android:contentDescription="@string/title_favorite_description" />
+
+            <ImageView
+                android:id="@+id/iv_title_poster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/title_margin_top_less"
+                android:contentDescription="@string/poster_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_title_plot"
@@ -98,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/title_margin_start_more"
         android:layout_marginTop="@dimen/title_margin_top_more"
-        android:layout_marginEnd="@dimen/title_margin_start_less"
+        android:layout_marginEnd="@dimen/title_margin_end_less"
         android:textSize="@dimen/title_plot_size"
         tools:text="Plot" />
 

@@ -22,7 +22,6 @@ import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
 import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
-import static com.example.movieapp.mvp.model.base.SearchConstants.NO_RESULT;
 
 public class SearchResultPresenter extends MvpPresenter<ISearchResultView> implements ILogger {
 
@@ -50,8 +49,8 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
             int index = view.getPos();
             showVerboseLog(this, "onItemClick - " + index);
             SearchResult searchResult = searchResults.get(index);
-            if (!searchResult.getNameString().equals(NO_RESULT)) {
-                router.navigateTo(new Screens.TitleScreen(searchResult));
+            if (!searchResult.equals(new SearchResult.EmptySearchResult())) {
+                router.navigateTo(new Screens.TitleScreen(searchResult.getId()));
             }
         }
 
@@ -109,7 +108,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
         showVerboseLog(this, "setData");
         searchResultListPresenter.searchResults.clear();
         if (query.equals(EMPTY_STRING)) {
-            searchResultListPresenter.searchResults.add(getEmptySearchResult());
+            searchResultListPresenter.searchResults.add(new SearchResult.EmptySearchResult());
         } else {
             searchRepo.getSearch(query).observeOn(scheduler).subscribe(
                     (search) -> {
@@ -118,7 +117,7 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
                             searchResultListPresenter.searchResults.addAll(search.getList());
                         } else {
                             showVerboseLog(this, "setData.onNext - EmptySearchResult");
-                            searchResultListPresenter.searchResults.add(getEmptySearchResult());
+                            searchResultListPresenter.searchResults.add(new SearchResult.EmptySearchResult());
                         }
                         getViewState().updateResultData();
                     },
@@ -128,10 +127,6 @@ public class SearchResultPresenter extends MvpPresenter<ISearchResultView> imple
             );
         }
         getViewState().updateResultData();
-    }
-
-    private SearchResult getEmptySearchResult() {
-        return new SearchResult(EMPTY_STRING, NO_RESULT, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING);
     }
 
     public boolean backPressed() {

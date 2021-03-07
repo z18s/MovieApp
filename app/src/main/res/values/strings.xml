@@ -7,10 +7,12 @@
     <string name="search_main_text">Movie, Series &amp; Game Browser</string>
     <string name="search_hint_text">Enter a movie name</string>
     <string name="search_button_text">Search</string>
+    <string name="favorites_button_text">Favorites</string>
 
     <!-- Search Result -->
 
     <!-- Title -->
+    <string name="title_favorite_description">Fav</string>
 
     <!-- Poster -->
     <string name="poster_description">Poster</string>

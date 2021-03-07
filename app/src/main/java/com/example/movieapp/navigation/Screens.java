@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.movieapp.mvp.model.base.TagConstants;
 import com.example.movieapp.mvp.model.search.data.SearchResult;
+import com.example.movieapp.ui.fragment.FavoritesFragment;
 import com.example.movieapp.ui.fragment.PosterFragment;
 import com.example.movieapp.ui.fragment.SearchFieldFragment;
 import com.example.movieapp.ui.fragment.SearchResultFragment;
@@ -40,18 +41,26 @@ public class Screens {
         }
     }
 
-    public static class TitleScreen extends SupportAppScreen {
-        private final SearchResult searchResult;
+    public static class FavoritesScreen extends SupportAppScreen {
 
-        public TitleScreen(SearchResult searchResult) {
-            this.searchResult = searchResult;
+        @Override
+        public Fragment getFragment() {
+            return new FavoritesFragment();
+        }
+    }
+
+    public static class TitleScreen extends SupportAppScreen {
+        private final String titleId;
+
+        public TitleScreen(String titleId) {
+            this.titleId = titleId;
         }
 
         @Override
         public Fragment getFragment() {
             TitleFragment titleFragment = new TitleFragment();
             Bundle args = new Bundle();
-            args.putParcelable(TagConstants.TITLE_TAG, searchResult);
+            args.putString(TagConstants.TITLE_TAG, titleId);
             titleFragment.setArguments(args);
             return titleFragment;
         }

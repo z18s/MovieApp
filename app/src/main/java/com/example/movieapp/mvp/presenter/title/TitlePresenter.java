@@ -2,7 +2,6 @@ package com.example.movieapp.mvp.presenter.title;
 
 import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.logger.ILogger;
-import com.example.movieapp.mvp.model.search.data.SearchResult;
 import com.example.movieapp.mvp.model.title.repo.ITitleRepo;
 import com.example.movieapp.mvp.view.title.ITitleView;
 import com.example.movieapp.navigation.Screens;
@@ -22,11 +21,12 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
     @Inject
     ITitleRepo titleRepo;
 
-    private final SearchResult searchResult;
+    private final String titleId;
     private String imageUrl;
+    private boolean favoriteStatus;
 
-    public TitlePresenter(SearchResult searchResult) {
-        this.searchResult = searchResult;
+    public TitlePresenter(String titleId) {
+        this.titleId = titleId;
         MovieApp.instance.getTitleSubcomponent().inject(this);
     }
 
@@ -45,7 +45,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
 
     private void setData() {
         showVerboseLog(this, "setData");
-        titleRepo.getTitle(searchResult.getId()).observeOn(scheduler).subscribe(
+        titleRepo.getTitle(titleId).observeOn(scheduler).subscribe(
                 (title) -> {
                     getViewState().setData(
                             title.getName(),
@@ -55,9 +55,11 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
                             title.getCountry(),
                             title.getDirector(),
                             title.getRating(),
-                            title.getPlot()
+                            title.getPlot(),
+                            title.isFavorite()
                     );
                     imageUrl = title.getImageUrl();
+                    favoriteStatus = title.isFavorite();
                 },
                 (e) -> {
                     showVerboseLog(this, "setData.onError " + e.getMessage());
@@ -65,10 +67,23 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
         );
     }
 
-    public void onImageClick() {
+    public void onPosterClick() {
         if (imageUrl != null) {
             router.navigateTo(new Screens.PosterScreen(imageUrl));
         }
+    }
+
+    public void onStarClick() {
+        if (favoriteStatus) {
+            titleRepo.deleteFavorite(titleId).observeOn(scheduler).subscribe(this::updateFavoriteStatus);
+        } else {
+            titleRepo.putFavorite(titleId).observeOn(scheduler).subscribe(this::updateFavoriteStatus);
+        }
+    }
+
+    public void updateFavoriteStatus() {
+        favoriteStatus = !favoriteStatus;
+        getViewState().updateFavoriteIcon(favoriteStatus);
     }
 
     public boolean backPressed() {

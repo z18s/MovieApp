@@ -3,6 +3,7 @@ package com.example.movieapp.mvp.presenter.search;
 import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.search.cache.IHistoryCache;
+import com.example.movieapp.mvp.presenter.search.button.IFavoritesButtonPresenter;
 import com.example.movieapp.mvp.presenter.search.button.ISearchButtonPresenter;
 import com.example.movieapp.mvp.presenter.search.list.IHistoryListPresenter;
 import com.example.movieapp.mvp.presenter.search.text.ISearchEditTextPresenter;
@@ -35,15 +36,24 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
         MovieApp.instance.getSearchSubcomponent().inject(this);
     }
 
-    private final SearchFieldPresenter.SearchButtonPresenter searchButtonPresenter = new SearchFieldPresenter.SearchButtonPresenter();
-    private final SearchFieldPresenter.SearchEditTextPresenter searchEditTextPresenter = new SearchFieldPresenter.SearchEditTextPresenter();
-    private final SearchFieldPresenter.SearchHistoryListPresenter searchHistoryListPresenter = new SearchFieldPresenter.SearchHistoryListPresenter();
+    private final SearchButtonPresenter searchButtonPresenter = new SearchButtonPresenter();
+    private final FavoritesButtonPresenter favoritesButtonPresenter = new FavoritesButtonPresenter();
+    private final SearchEditTextPresenter searchEditTextPresenter = new SearchEditTextPresenter();
+    private final SearchHistoryListPresenter searchHistoryListPresenter = new SearchHistoryListPresenter();
 
     private class SearchButtonPresenter implements ISearchButtonPresenter {
 
         @Override
         public void onClick(String query) {
             router.navigateTo(new Screens.SearchResultScreen(query));
+        }
+    }
+
+    private class FavoritesButtonPresenter implements IFavoritesButtonPresenter {
+
+        @Override
+        public void onClick(String query) {
+            router.navigateTo(new Screens.FavoritesScreen());
         }
     }
 
@@ -81,8 +91,12 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
         }
     }
 
-    public ISearchButtonPresenter getButtonPresenter() {
+    public ISearchButtonPresenter getSearchButtonPresenter() {
         return searchButtonPresenter;
+    }
+
+    public IFavoritesButtonPresenter getFavoritesButtonPresenter() {
+        return favoritesButtonPresenter;
     }
 
     public ISearchEditTextPresenter getEditTextPresenter() {
