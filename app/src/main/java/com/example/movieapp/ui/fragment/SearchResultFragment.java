@@ -61,8 +61,13 @@ public class SearchResultFragment extends MvpAppCompatFragment implements ISearc
     }
 
     private String getQuery() {
-        String result = getArguments().getString(TagConstants.QUERY_TAG);
-        return (result != null) ? result : EMPTY_STRING;
+        if (getArguments() != null) {
+            String arg = getArguments().getString(TagConstants.QUERY_TAG);
+            if (arg != null) {
+                return arg;
+            }
+        }
+        return EMPTY_STRING;
     }
 
     @Override

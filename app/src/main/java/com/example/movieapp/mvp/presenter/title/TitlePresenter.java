@@ -12,6 +12,8 @@ import io.reactivex.rxjava3.core.Scheduler;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+
 public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger {
 
     @Inject
@@ -45,26 +47,28 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
 
     private void setData() {
         showVerboseLog(this, "setData");
-        titleRepo.getTitle(titleId).observeOn(scheduler).subscribe(
-                (title) -> {
-                    getViewState().setData(
-                            title.getName(),
-                            title.getImageUrl(),
-                            title.getType(),
-                            title.getYear(),
-                            title.getCountry(),
-                            title.getDirector(),
-                            title.getRating(),
-                            title.getPlot(),
-                            title.isFavorite()
-                    );
-                    imageUrl = title.getImageUrl();
-                    favoriteStatus = title.isFavorite();
-                },
-                (e) -> {
-                    showVerboseLog(this, "setData.onError " + e.getMessage());
-                }
-        );
+        if (!titleId.equals(EMPTY_STRING)) {
+            titleRepo.getTitle(titleId).observeOn(scheduler).subscribe(
+                    (title) -> {
+                        getViewState().setData(
+                                title.getName(),
+                                title.getImageUrl(),
+                                title.getType(),
+                                title.getYear(),
+                                title.getCountry(),
+                                title.getDirector(),
+                                title.getRating(),
+                                title.getPlot(),
+                                title.isFavorite()
+                        );
+                        imageUrl = title.getImageUrl();
+                        favoriteStatus = title.isFavorite();
+                    },
+                    (e) -> {
+                        showVerboseLog(this, "setData.onError " + e.getMessage());
+                    }
+            );
+        }
     }
 
     public void onPosterClick() {

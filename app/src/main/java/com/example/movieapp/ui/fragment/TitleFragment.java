@@ -26,6 +26,8 @@ import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+
 public class TitleFragment extends MvpAppCompatFragment implements ITitleView, ILogger, BackButtonListener {
 
     private static final IImageLoader<ImageView> imageLoader = new GlideImageLoader();
@@ -120,7 +122,13 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
     }
 
     private String getTitle() {
-        return getArguments().getString(TagConstants.TITLE_TAG);
+        if (getArguments() != null) {
+            String arg = getArguments().getString(TagConstants.TITLE_TAG);
+            if (arg != null) {
+                return arg;
+            }
+        }
+        return EMPTY_STRING;
     }
 
     @Override
