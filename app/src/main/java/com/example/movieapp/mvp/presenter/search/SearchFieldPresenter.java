@@ -37,7 +37,6 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
     }
 
     private final SearchButtonPresenter searchButtonPresenter = new SearchButtonPresenter();
-    private final FavoritesButtonPresenter favoritesButtonPresenter = new FavoritesButtonPresenter();
     private final SearchEditTextPresenter searchEditTextPresenter = new SearchEditTextPresenter();
     private final SearchHistoryListPresenter searchHistoryListPresenter = new SearchHistoryListPresenter();
 
@@ -46,14 +45,6 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
         @Override
         public void onClick(String query) {
             router.navigateTo(new Screens.SearchResultScreen(query));
-        }
-    }
-
-    private class FavoritesButtonPresenter implements IFavoritesButtonPresenter {
-
-        @Override
-        public void onClick(String query) {
-            router.navigateTo(new Screens.FavoritesScreen());
         }
     }
 
@@ -93,10 +84,6 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
 
     public ISearchButtonPresenter getSearchButtonPresenter() {
         return searchButtonPresenter;
-    }
-
-    public IFavoritesButtonPresenter getFavoritesButtonPresenter() {
-        return favoritesButtonPresenter;
     }
 
     public ISearchEditTextPresenter getEditTextPresenter() {

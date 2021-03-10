@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -106,10 +107,14 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
     }
 
     @Override
-    public void updateFavoriteIcon(boolean favoriteStatus) {
-
+    public void updateFavoriteIcon(String titleName, boolean favoriteStatus) {
+        showToast(titleName, favoriteStatus);
         favoriteImageView.startAnimation(getFavoriteIconAnimation());
         setFavoriteIcon(favoriteStatus);
+    }
+
+    private void showToast(String titleName, boolean favoriteStatus) {
+        Toast.makeText(requireContext(), String.format("«%s» %s Favorites", titleName, (favoriteStatus) ? "added to" : "removed from"), Toast.LENGTH_SHORT).show();
     }
 
     private Animation getFavoriteIconAnimation() {

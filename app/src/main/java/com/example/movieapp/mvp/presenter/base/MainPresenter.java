@@ -22,7 +22,24 @@ public class MainPresenter extends MvpPresenter<IMainView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        router.replaceScreen(new Screens.SearchScreen());
+        moveToSearchScreen();
+    }
+
+    public void moveToSearchScreen() {
+        router.newRootScreen(new Screens.SearchScreen());
+    }
+
+    public void moveToFavoritesScreen() {
+        router.newRootScreen(new Screens.FavoritesScreen());
+    }
+
+    public void openSettingsScreen() {
+        //router.navigateTo(new Screens.SettingsScreen());
+    }
+
+    public void exit() {
+        router.backTo(null);
+        router.exit();
     }
 
     public void backClicked() {

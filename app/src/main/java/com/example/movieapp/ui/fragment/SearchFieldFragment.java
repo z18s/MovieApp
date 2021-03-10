@@ -28,7 +28,6 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
     private View view;
     private SearchView searchView;
     private Button searchButton;
-    private Button favoritesButton;
     private RecyclerView historyRecyclerView;
     private SearchHistoryAdapter historyAdapter;
 
@@ -54,7 +53,6 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
     private void initViews() {
         searchView = view.findViewById(R.id.sv_search);
         searchButton = view.findViewById(R.id.btn_search);
-        favoritesButton = view.findViewById(R.id.btn_favorites);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         historyAdapter = new SearchHistoryAdapter(presenter.getHistoryListPresenter());
@@ -64,16 +62,14 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
 
     private void initListeners() {
         searchButton.setOnClickListener((view) -> {
+            hideKeyboard();
             startSearch(searchView.getQuery().toString());
-        });
-
-        favoritesButton.setOnClickListener((view) -> {
-            openFavorites();
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                hideKeyboard();
                 startSearch(query);
                 return true;
             }
@@ -86,12 +82,12 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
         });
     }
 
-    private void startSearch(String query) {
-        presenter.getSearchButtonPresenter().onClick(query);
+    private void hideKeyboard() {
+        searchView.clearFocus();
     }
 
-    private void openFavorites() {
-        presenter.getFavoritesButtonPresenter().onClick("");
+    private void startSearch(String query) {
+        presenter.getSearchButtonPresenter().onClick(query);
     }
 
     private void loadHistory(String query) {

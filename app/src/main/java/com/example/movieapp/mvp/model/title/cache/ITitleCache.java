@@ -1,6 +1,7 @@
 package com.example.movieapp.mvp.model.title.cache;
 
 import com.example.movieapp.mvp.model.title.data.Title;
+import com.example.movieapp.mvp.model.title.database.RoomFavorites;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface ITitleCache {
     Single<Title> getTitle(String id);
     Completable putTitle(Title title);
 
-    Single<List<Title>> getFavorites();
+    Single<List<RoomFavorites>> getFavorites();
     Single<Boolean> getFavoriteStatus(String id);
     Completable putFavorite(String id);
     Completable deleteFavorite(String id);

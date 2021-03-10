@@ -27,7 +27,7 @@ public class RoomTitleCache implements ITitleCache, ILogger {
             showVerboseLog(this, "getTitle");
 
             RoomTitle roomTitle = db.titleDao().findById(id);
-            boolean favoriteStatus = getFavoriteStatus(id).blockingGet();
+            Boolean favoriteStatus = getFavoriteStatus(id).blockingGet();
 
             return new Title(
                     roomTitle.getId(),
@@ -64,19 +64,10 @@ public class RoomTitleCache implements ITitleCache, ILogger {
     }
 
     @Override
-    public Single<List<Title>> getFavorites() {
+    public Single<List<RoomFavorites>> getFavorites() {
         return Single.fromCallable(() -> {
             showVerboseLog(this, "getFavorites");
-
-            List<RoomFavorites> roomFavorites = db.favoritesDao().getAll();
-            List<Title> favoritesTitles = new ArrayList<>();
-
-            for (RoomFavorites roomFavorite: roomFavorites) {
-                Title favoritesTitle = getTitle(roomFavorite.getId()).blockingGet();
-                favoritesTitles.add(favoritesTitle);
-            }
-
-            return favoritesTitles;
+            return db.favoritesDao().getAll();
         }).subscribeOn(Schedulers.io());
     }
 
@@ -84,7 +75,6 @@ public class RoomTitleCache implements ITitleCache, ILogger {
     public Single<Boolean> getFavoriteStatus(String id) {
         return Single.fromCallable(() -> {
             showVerboseLog(this, "getFavoriteStatus");
-
             return db.favoritesDao().isTitleExists(id);
         }).subscribeOn(Schedulers.io());
     }
@@ -93,7 +83,6 @@ public class RoomTitleCache implements ITitleCache, ILogger {
     public Completable putFavorite(String id) {
         return Completable.fromAction(() -> {
             showVerboseLog(this, "putFavorite");
-
             db.favoritesDao().insert(new RoomFavorites(id));
         }).subscribeOn(Schedulers.io());
     }
@@ -102,7 +91,6 @@ public class RoomTitleCache implements ITitleCache, ILogger {
     public Completable deleteFavorite(String id) {
         return Completable.fromAction(() -> {
             showVerboseLog(this, "deleteFavorite");
-
             RoomFavorites roomFavorites = new RoomFavorites(id);
             db.favoritesDao().delete(roomFavorites);
         }).subscribeOn(Schedulers.io());

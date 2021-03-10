@@ -24,6 +24,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
     ITitleRepo titleRepo;
 
     private final String titleId;
+    private String titleName;
     private String imageUrl;
     private boolean favoriteStatus;
 
@@ -61,6 +62,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
                                 title.getPlot(),
                                 title.isFavorite()
                         );
+                        titleName = title.getName();
                         imageUrl = title.getImageUrl();
                         favoriteStatus = title.isFavorite();
                     },
@@ -87,7 +89,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
 
     public void updateFavoriteStatus() {
         favoriteStatus = !favoriteStatus;
-        getViewState().updateFavoriteIcon(favoriteStatus);
+        getViewState().updateFavoriteIcon(titleName, favoriteStatus);
     }
 
     public boolean backPressed() {
