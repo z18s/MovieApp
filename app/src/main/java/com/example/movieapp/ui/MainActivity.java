@@ -87,6 +87,11 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView, ILo
                     actionBar.setSubtitle(R.string.menu_favorites);
                     item.setChecked(true);
                     break;
+                case (R.id.menu_bn_ratings):
+                    presenter.moveToUserRatingsScreen();
+                    actionBar.setSubtitle(R.string.menu_ratings);
+                    item.setChecked(true);
+                    break;
                 case (R.id.menu_bn_exit):
                     presenter.exit();
                     actionBar.setSubtitle("...");

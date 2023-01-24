@@ -11,6 +11,7 @@ import com.example.movieapp.ui.fragment.PosterFragment;
 import com.example.movieapp.ui.fragment.SearchFieldFragment;
 import com.example.movieapp.ui.fragment.SearchResultFragment;
 import com.example.movieapp.ui.fragment.TitleFragment;
+import com.example.movieapp.ui.fragment.UserRatingsFragment;
 
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -46,6 +47,14 @@ public class Screens {
         @Override
         public Fragment getFragment() {
             return new FavoritesFragment();
+        }
+    }
+
+    public static class UserRatingsScreen extends SupportAppScreen {
+
+        @Override
+        public Fragment getFragment() {
+            return new UserRatingsFragment();
         }
     }
 

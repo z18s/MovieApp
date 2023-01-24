@@ -1,12 +1,14 @@
 package com.example.movieapp.mvp.model.title.cache;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+
 import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.title.database.RoomFavorites;
 import com.example.movieapp.mvp.model.title.database.RoomTitle;
 import com.example.movieapp.mvp.model.title.data.Title;
 import com.example.movieapp.mvp.model.base.database.Database;
+import com.example.movieapp.mvp.model.title.database.RoomUserRatings;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -28,6 +30,7 @@ public class RoomTitleCache implements ITitleCache, ILogger {
 
             RoomTitle roomTitle = db.titleDao().findById(id);
             Boolean favoriteStatus = getFavoriteStatus(id).blockingGet();
+            String userRating = getUserRating(id).blockingGet();
 
             return new Title(
                     roomTitle.getId(),
@@ -39,7 +42,8 @@ public class RoomTitleCache implements ITitleCache, ILogger {
                     roomTitle.getDirector(),
                     roomTitle.getRating(),
                     roomTitle.getPlot(),
-                    favoriteStatus
+                    favoriteStatus,
+                    userRating
             );
         }).subscribeOn(Schedulers.io());
     }
@@ -93,6 +97,39 @@ public class RoomTitleCache implements ITitleCache, ILogger {
             showVerboseLog(this, "deleteFavorite");
             RoomFavorites roomFavorites = new RoomFavorites(id);
             db.favoritesDao().delete(roomFavorites);
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Single<List<RoomUserRatings>> getUserRatings() {
+        return Single.fromCallable(() -> {
+            showVerboseLog(this, "getUserRatings");
+            return db.userRatingsDao().getAll();
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Single<String> getUserRating(String id) {
+        return Single.fromCallable(() -> {
+            showVerboseLog(this, "getUserRating");
+            return (db.userRatingsDao().isTitleExists(id)) ? db.userRatingsDao().findById(id).rating : EMPTY_STRING;
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable setUserRating(String id, String rating) {
+        return Completable.fromAction(() -> {
+            showVerboseLog(this, "setUserRating");
+            db.userRatingsDao().insert(new RoomUserRatings(id, rating));
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable deleteUserRating(String id) {
+        return Completable.fromAction(() -> {
+            showVerboseLog(this, "deleteUserRating");
+            RoomUserRatings roomUserRatings = new RoomUserRatings(id);
+            db.userRatingsDao().delete(roomUserRatings);
         }).subscribeOn(Schedulers.io());
     }
 }

@@ -28,7 +28,6 @@ public class FavoritesPresenter extends MvpPresenter<IFavoritesView> implements 
     ITitleRepo titleRepo;
 
     public FavoritesPresenter() {
-
         MovieApp.instance.getTitleSubcomponent().inject(this);
     }
 
@@ -76,6 +75,7 @@ public class FavoritesPresenter extends MvpPresenter<IFavoritesView> implements 
         view.setName(favorite.getName());
         view.setYear(favorite.getYear());
         view.setCountry(favorite.getCountry());
+        view.setUserRating(favorite.getUserRating());
     }
 
     private void setData() {

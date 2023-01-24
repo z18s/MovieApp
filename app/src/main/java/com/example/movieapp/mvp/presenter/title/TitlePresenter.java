@@ -27,6 +27,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
     private String titleName;
     private String imageUrl;
     private boolean favoriteStatus;
+    private String userRating;
 
     public TitlePresenter(String titleId) {
         this.titleId = titleId;
@@ -60,11 +61,13 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
                                 title.getDirector(),
                                 title.getRating(),
                                 title.getPlot(),
-                                title.isFavorite()
+                                title.isFavorite(),
+                                title.getUserRating()
                         );
                         titleName = title.getName();
                         imageUrl = title.getImageUrl();
                         favoriteStatus = title.isFavorite();
+                        userRating = title.getUserRating();
                     },
                     (e) -> {
                         showVerboseLog(this, "setData.onError " + e.getMessage());
@@ -79,7 +82,7 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
         }
     }
 
-    public void onStarClick() {
+    public void onHeartClick() {
         if (favoriteStatus) {
             titleRepo.deleteFavorite(titleId).observeOn(scheduler).subscribe(this::updateFavoriteStatus);
         } else {
@@ -90,6 +93,21 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
     public void updateFavoriteStatus() {
         favoriteStatus = !favoriteStatus;
         getViewState().updateFavoriteIcon(titleName, favoriteStatus);
+    }
+
+    public void onStarClick() {
+        if (userRating == null || userRating.equals(EMPTY_STRING)) {
+            //TODO
+            userRating = String.valueOf((int)(1 + (Math.random() * 10)));
+            titleRepo.setUserRating(titleId, userRating).observeOn(scheduler).subscribe(this::updateUserRating);
+        } else {
+            userRating = null;
+            titleRepo.deleteUserRating(titleId).observeOn(scheduler).subscribe(this::updateUserRating);
+        }
+    }
+
+    public void updateUserRating() {
+        getViewState().updateUserRatingIcon(titleName, userRating);
     }
 
     public boolean backPressed() {

@@ -3,41 +3,41 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/favorites_item_height"
+    android:layout_height="@dimen/user_ratings_item_height"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal"
     android:weightSum="1">
 
     <TextView
-        android:id="@+id/tv_favorites_item_name"
+        android:id="@+id/tv_user_ratings_item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/favorites_item_title_margin_start"
+        android:layout_marginStart="@dimen/user_ratings_item_title_margin_start"
         android:layout_weight="0.6"
-        android:textSize="@dimen/favorites_item_title_size"
+        android:textSize="@dimen/user_ratings_item_title_size"
         tools:text="Name" />
 
     <TextView
-        android:id="@+id/tv_favorites_item_year"
+        android:id="@+id/tv_user_ratings_item_year"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.15"
-        android:textSize="@dimen/favorites_item_text_size"
+        android:textSize="@dimen/user_ratings_item_text_size"
         tools:text="Year" />
 
     <TextView
-        android:id="@+id/tv_favorites_item_country"
+        android:id="@+id/tv_user_ratings_item_country"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.15"
-        android:textSize="@dimen/favorites_item_text_size"
+        android:textSize="@dimen/user_ratings_item_text_size"
         tools:text="Country" />
 
     <TextView
-        android:id="@+id/tv_favorites_item_user_rating"
+        android:id="@+id/tv_user_ratings_item_rating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10"
+        android:layout_weight="0.1"
         android:textSize="@dimen/user_ratings_item_text_size"
         android:textStyle="bold"
         tools:text="User Rating" />

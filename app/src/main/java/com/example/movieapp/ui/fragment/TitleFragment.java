@@ -43,6 +43,8 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
     private TextView ratingTextView;
     private TextView plotTextView;
     private ImageView favoriteImageView;
+    private ImageView userRatingImageView;
+    private TextView userRatingTextView;
 
     @InjectPresenter
     TitlePresenter presenter;
@@ -77,6 +79,8 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
         ratingTextView = view.findViewById(R.id.tv_title_rating);
         plotTextView = view.findViewById(R.id.tv_title_plot);
         favoriteImageView = view.findViewById(R.id.iv_title_favorite);
+        userRatingImageView = view.findViewById(R.id.iv_title_user_rating_icon);
+        userRatingTextView = view.findViewById(R.id.tv_title_user_rating);
     }
 
     private void initListeners() {
@@ -84,13 +88,16 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
             presenter.onPosterClick();
         });
         favoriteImageView.setOnClickListener((view) -> {
+            presenter.onHeartClick();
+        });
+        userRatingImageView.setOnClickListener((view) -> {
             presenter.onStarClick();
         });
     }
 
     @Override
-    public void setData(String name, String imageUrl, String type, String year, String country, String director, String rating, String plot, boolean favoriteStatus) {
-        showVerboseLog(this, "setData.nameTextView = " + nameTextView);
+    public void setData(String name, String imageUrl, String type, String year, String country, String director, String rating, String plot, boolean favoriteStatus, String userRating) {
+        showVerboseLog(this, "setData");
         nameTextView.setText(name);
         imageLoader.loadImage(imageUrl, posterImageView);
         typeTextView.setText(type);
@@ -100,6 +107,7 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
         ratingTextView.setText(rating);
         plotTextView.setText(plot);
         setFavoriteIcon(favoriteStatus);
+        setUserRating(userRating);
     }
 
     private void setFavoriteIcon(boolean favoriteStatus) {
@@ -109,15 +117,41 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
     @Override
     public void updateFavoriteIcon(String titleName, boolean favoriteStatus) {
         showToast(titleName, favoriteStatus);
-        favoriteImageView.startAnimation(getFavoriteIconAnimation());
+        favoriteImageView.startAnimation(getIconAnimation());
         setFavoriteIcon(favoriteStatus);
+    }
+
+    private void setUserRating(String userRating) {
+        showVerboseLog(this, "setUserRating");
+        if (userRating == null || userRating.equals("")) {
+            userRatingImageView.setImageResource(R.drawable.ic_rating_false);
+            userRatingTextView.setText("");
+        } else {
+            userRatingImageView.setImageResource(R.drawable.ic_rating_true);
+            userRatingTextView.setText(userRating);
+        }
+    }
+
+    @Override
+    public void updateUserRatingIcon(String titleName, String userRating) {
+        showToast(titleName, userRating);
+        userRatingImageView.startAnimation(getIconAnimation());
+        setUserRating(userRating);
     }
 
     private void showToast(String titleName, boolean favoriteStatus) {
         Toast.makeText(requireContext(), String.format("«%s» %s Favorites", titleName, (favoriteStatus) ? "added to" : "removed from"), Toast.LENGTH_SHORT).show();
     }
 
-    private Animation getFavoriteIconAnimation() {
+    private void showToast(String titleName, String userRating) {
+        if (userRating == null || userRating.equals(EMPTY_STRING)) {
+            Toast.makeText(requireContext(), String.format("«%s» unrated", titleName), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(requireContext(), String.format("«%s» rated on %s", titleName, userRating), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Animation getIconAnimation() {
         return AnimationUtils.loadAnimation(this.requireContext(), android.R.anim.fade_in);
     }
 

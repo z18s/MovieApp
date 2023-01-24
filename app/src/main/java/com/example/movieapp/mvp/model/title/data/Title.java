@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
 import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
-import static com.example.movieapp.mvp.model.base.SearchConstants.NO_FAVORITES;
+import static com.example.movieapp.mvp.model.base.SearchConstants.NO_RESULT;
 
 public class Title {
 
@@ -51,7 +51,10 @@ public class Title {
     @SerializedName("FavoriteStatus")
     boolean favoriteStatus;
 
-    public Title(String id, String name, String imageUrl, String type, String year, String country, String director, String rating, String plot, boolean favoriteStatus) {
+    @SerializedName("UserRating")
+    String userRating;
+
+    public Title(String id, String name, String imageUrl, String type, String year, String country, String director, String rating, String plot, boolean favoriteStatus, String userRating) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -62,6 +65,7 @@ public class Title {
         this.rating = rating;
         this.plot = plot;
         this.favoriteStatus = favoriteStatus;
+        this.userRating = userRating;
     }
 
     public String getId() {
@@ -108,10 +112,18 @@ public class Title {
         this.favoriteStatus = favoriteStatus;
     }
 
+    public String getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(String userRating) {
+        this.userRating = userRating;
+    }
+
     public static class EmptyTitle extends Title {
 
         public EmptyTitle() {
-            super(EMPTY_STRING, NO_FAVORITES, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, false);
+            super(EMPTY_STRING, NO_RESULT, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, false, EMPTY_STRING);
         }
 
         @Override
@@ -128,7 +140,7 @@ public class Title {
                 return true;
             }
             EmptyTitle that = (EmptyTitle) obj;
-            return (that.getId().equals(EMPTY_STRING) && that.getName().equals(NO_FAVORITES));
+            return (that.getId().equals(EMPTY_STRING) && that.getName().equals(NO_RESULT));
         }
     }
 }

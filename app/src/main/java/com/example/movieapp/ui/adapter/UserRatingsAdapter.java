@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieapp.R;
 import com.example.movieapp.logger.ILogger;
-import com.example.movieapp.mvp.presenter.title.list.IFavoritesListPresenter;
-import com.example.movieapp.mvp.view.title.list.IFavoritesItemView;
+import com.example.movieapp.mvp.presenter.title.list.IUserRatingsListPresenter;
+import com.example.movieapp.mvp.view.title.list.IUserRatingsItemView;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> implements ILogger {
+public class UserRatingsAdapter extends RecyclerView.Adapter<UserRatingsAdapter.ViewHolder> implements ILogger {
 
-    private final IFavoritesListPresenter presenter;
+    private final IUserRatingsListPresenter presenter;
 
-    public FavoritesAdapter(IFavoritesListPresenter presenter) {
+    public UserRatingsAdapter(IUserRatingsListPresenter presenter) {
         this.presenter = presenter;
         showVerboseLog(this, "constructor");
     }
@@ -28,8 +28,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View favoritesView = inflater.inflate(R.layout.item_favorites, parent, false);
-        return new FavoritesAdapter.ViewHolder(favoritesView);
+        View userRatingsView = inflater.inflate(R.layout.item_ratings, parent, false);
+        return new UserRatingsAdapter.ViewHolder(userRatingsView);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         return presenter.getCount();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements IFavoritesItemView {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements IUserRatingsItemView {
         TextView nameView;
         TextView yearView;
         TextView countryView;
@@ -56,10 +56,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            nameView = itemView.findViewById(R.id.tv_favorites_item_name);
-            yearView = itemView.findViewById(R.id.tv_favorites_item_year);
-            countryView = itemView.findViewById(R.id.tv_favorites_item_country);
-            userRatingView = itemView.findViewById(R.id.tv_favorites_item_user_rating);
+            nameView = itemView.findViewById(R.id.tv_user_ratings_item_name);
+            yearView = itemView.findViewById(R.id.tv_user_ratings_item_year);
+            countryView = itemView.findViewById(R.id.tv_user_ratings_item_country);
+            userRatingView = itemView.findViewById(R.id.tv_user_ratings_item_rating);
         }
 
         @Override

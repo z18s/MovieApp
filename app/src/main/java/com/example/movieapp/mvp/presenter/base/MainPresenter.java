@@ -33,6 +33,10 @@ public class MainPresenter extends MvpPresenter<IMainView> {
         router.newRootScreen(new Screens.FavoritesScreen());
     }
 
+    public void moveToUserRatingsScreen() {
+        router.newRootScreen(new Screens.UserRatingsScreen());
+    }
+
     public void openSettingsScreen() {
         //router.navigateTo(new Screens.SettingsScreen());
     }

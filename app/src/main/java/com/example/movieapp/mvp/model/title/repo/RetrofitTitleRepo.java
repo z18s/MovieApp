@@ -1,10 +1,13 @@
 package com.example.movieapp.mvp.model.title.repo;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+
 import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.base.api.IDataSource;
 import com.example.movieapp.mvp.model.title.cache.ITitleCache;
 import com.example.movieapp.mvp.model.title.data.Title;
 import com.example.movieapp.mvp.model.title.database.RoomFavorites;
+import com.example.movieapp.mvp.model.title.database.RoomUserRatings;
 import com.example.movieapp.utils.network.INetworkStatus;
 
 import java.util.ArrayList;
@@ -34,6 +37,8 @@ public class RetrofitTitleRepo implements ITitleRepo, ILogger {
                 return api.getTitle(id).flatMap((title) -> {
                     boolean favoriteStatus = getFavoriteStatus(id).blockingGet();
                     title.setFavorite(favoriteStatus);
+                    String userRating = (getUserRating(id).blockingGet() == null) ? EMPTY_STRING : getUserRating(id).blockingGet();
+                    title.setUserRating(userRating);
                     return cache.putTitle(title).toSingleDefault(title);
                 });
             } else {
@@ -74,5 +79,39 @@ public class RetrofitTitleRepo implements ITitleRepo, ILogger {
     public Completable deleteFavorite(String id) {
         showVerboseLog(this, "deleteFavorite");
         return cache.deleteFavorite(id);
+    }
+
+    @Override
+    public Single<List<Title>> getUserRatings() {
+        showVerboseLog(this, "getUserRatings");
+        return Single.fromCallable(() -> {
+            List<RoomUserRatings> roomUserRatings = cache.getUserRatings().blockingGet();
+            List<Title> userRatingsTitles = new ArrayList<>();
+
+            for (RoomUserRatings roomUserRating: roomUserRatings) {
+                String id = roomUserRating.getId();
+                Title userRatingsTitle = getTitle(id).blockingGet();
+                userRatingsTitles.add(userRatingsTitle);
+            }
+            return userRatingsTitles;
+        });
+    }
+
+    @Override
+    public Single<String> getUserRating(String id) {
+        showVerboseLog(this, "getUserRating");
+        return cache.getUserRating(id);
+    }
+
+    @Override
+    public Completable setUserRating(String id, String rating) {
+        showVerboseLog(this, "setUserRating");
+        return cache.setUserRating(id, rating);
+    }
+
+    @Override
+    public Completable deleteUserRating(String id) {
+        showVerboseLog(this, "deleteUserRating");
+        return cache.deleteUserRating(id);
     }
 }

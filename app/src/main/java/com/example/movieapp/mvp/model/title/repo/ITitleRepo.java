@@ -14,4 +14,8 @@ public interface ITitleRepo {
     Single<Boolean> getFavoriteStatus(String id);
     Completable putFavorite(String id);
     Completable deleteFavorite(String id);
+    Single<List<Title>> getUserRatings();
+    Single<String> getUserRating(String id);
+    Completable setUserRating(String id, String rating);
+    Completable deleteUserRating(String id);
 }
