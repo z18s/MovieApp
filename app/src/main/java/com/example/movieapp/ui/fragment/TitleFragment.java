@@ -103,7 +103,7 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
     }
 
     private void setFavoriteIcon(boolean favoriteStatus) {
-        favoriteImageView.setImageResource((favoriteStatus) ? (R.drawable.ic_favorite_star_true) : (R.drawable.ic_favorite_star_false));
+        favoriteImageView.setImageResource((favoriteStatus) ? (R.drawable.ic_favorite_true) : (R.drawable.ic_favorite_false));
     }
 
     @Override
