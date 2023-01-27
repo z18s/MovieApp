@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,12 @@ import com.example.movieapp.R;
 import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.presenter.title.list.IFavoritesListPresenter;
 import com.example.movieapp.mvp.view.title.list.IFavoritesItemView;
+import com.example.movieapp.utils.image.GlideImageLoader;
+import com.example.movieapp.utils.image.IImageLoader;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> implements ILogger {
 
+    private static final IImageLoader<ImageView> imageLoader = new GlideImageLoader();
     private final IFavoritesListPresenter presenter;
 
     public FavoritesAdapter(IFavoritesListPresenter presenter) {
@@ -47,6 +51,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements IFavoritesItemView {
+        ImageView posterImage;
         TextView nameView;
         TextView yearView;
         TextView countryView;
@@ -56,10 +61,16 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            posterImage = itemView.findViewById(R.id.iv_favorites_item_pic);
             nameView = itemView.findViewById(R.id.tv_favorites_item_name);
             yearView = itemView.findViewById(R.id.tv_favorites_item_year);
             countryView = itemView.findViewById(R.id.tv_favorites_item_country);
             userRatingView = itemView.findViewById(R.id.tv_favorites_item_user_rating);
+        }
+
+        @Override
+        public void setPoster(String imageUrl) {
+            imageLoader.loadImage(imageUrl, posterImage);
         }
 
         @Override

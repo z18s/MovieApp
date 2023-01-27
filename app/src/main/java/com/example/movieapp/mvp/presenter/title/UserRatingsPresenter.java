@@ -72,6 +72,7 @@ public class UserRatingsPresenter extends MvpPresenter<IUserRatingsView> impleme
 
     private void setRecyclerData(IUserRatingsItemView view, Title userRating) {
         showVerboseLog(this, "setRecyclerData");
+        view.setPoster(userRating.getImageUrl());
         view.setName(userRating.getName());
         view.setYear(userRating.getYear());
         view.setCountry(userRating.getCountry());

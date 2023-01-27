@@ -28,19 +28,21 @@
     <dimen name="favorites_item_title_size">18sp</dimen>
     <dimen name="favorites_item_text_size">10sp</dimen>
 
-    <dimen name="favorites_item_height">50dp</dimen>
+    <dimen name="favorites_item_height">60dp</dimen>
 
     <dimen name="favorites_padding">16dp</dimen>
-    <dimen name="favorites_item_title_margin_start">20dp</dimen>
+    <dimen name="favorites_item_title_margin_start">3dp</dimen>
+    <dimen name="favorites_item_title_margin_bottom">3dp</dimen>
 
     <!-- User Ratings -->
     <dimen name="user_ratings_item_title_size">18sp</dimen>
     <dimen name="user_ratings_item_text_size">10sp</dimen>
 
-    <dimen name="user_ratings_item_height">50dp</dimen>
+    <dimen name="user_ratings_item_height">60dp</dimen>
 
     <dimen name="user_ratings_padding">16dp</dimen>
-    <dimen name="user_ratings_item_title_margin_start">20dp</dimen>
+    <dimen name="user_ratings_item_title_margin_start">3dp</dimen>
+    <dimen name="user_ratings_item_title_margin_bottom">3dp</dimen>
 
     <!-- Title -->
     <dimen name="title_name_size">20sp</dimen>

@@ -72,6 +72,7 @@ public class FavoritesPresenter extends MvpPresenter<IFavoritesView> implements 
 
     private void setRecyclerData(IFavoritesItemView view, Title favorite) {
         showVerboseLog(this, "setRecyclerData");
+        view.setPoster(favorite.getImageUrl());
         view.setName(favorite.getName());
         view.setYear(favorite.getYear());
         view.setCountry(favorite.getCountry());
