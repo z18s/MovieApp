@@ -13,8 +13,4 @@
         android:id="@+id/menu_bn_ratings"
         android:icon="@drawable/ic_menu_ratings"
         android:title="@string/menu_ratings" />
-    <item
-        android:id="@+id/menu_bn_exit"
-        android:icon="@drawable/ic_menu_exit"
-        android:title="@string/menu_exit" />
 </menu>

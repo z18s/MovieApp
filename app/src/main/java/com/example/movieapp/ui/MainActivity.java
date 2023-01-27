@@ -61,6 +61,9 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView, ILo
             case (R.id.menu_main_settings):
                 presenter.openSettingsScreen();
                 break;
+            case (R.id.menu_main_exit):
+                presenter.exit();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -90,11 +93,6 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView, ILo
                 case (R.id.menu_bn_ratings):
                     presenter.moveToUserRatingsScreen();
                     actionBar.setSubtitle(R.string.menu_ratings);
-                    item.setChecked(true);
-                    break;
-                case (R.id.menu_bn_exit):
-                    presenter.exit();
-                    actionBar.setSubtitle("...");
                     item.setChecked(true);
                     break;
             }
