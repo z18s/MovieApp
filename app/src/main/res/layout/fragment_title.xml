@@ -81,8 +81,8 @@
                     android:id="@+id/tv_title_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_margin_start_more"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/title_margin_start_more"
                     android:textSize="@dimen/title_rating_size"
                     tools:text="Rating" />
 
@@ -90,16 +90,16 @@
                     android:id="@+id/iv_title_user_rating_icon"
                     android:layout_width="@dimen/title_star_width"
                     android:layout_height="@dimen/title_star_width"
-                    android:layout_marginStart="@dimen/title_margin_start_more"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/title_margin_start_more"
                     android:contentDescription="@string/title_rating_description" />
 
                 <TextView
                     android:id="@+id/tv_title_user_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_margin_start_less"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/title_margin_start_less"
                     android:textSize="@dimen/title_rating_size"
                     android:textStyle="bold"
                     tools:text="Rating" />
