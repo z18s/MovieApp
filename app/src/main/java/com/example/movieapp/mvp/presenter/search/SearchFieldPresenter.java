@@ -128,9 +128,13 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
         getViewState().updateHistoryList();
     }
 
+    private void updateData() {
+        setHistoryData(EMPTY_STRING);
+    }
+
     public void onClearSearchDataButtonClick() {
-        historyCache.clear();
-        searchCache.clear();
+        historyCache.clear().observeOn(scheduler).subscribe(this::updateData);
+        searchCache.clear().observeOn(scheduler).subscribe(this::updateData);
     }
 
     @Override

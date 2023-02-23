@@ -22,6 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/favorites_item_title_margin_start"
         android:layout_weight="0.5"
         android:textSize="@dimen/favorites_item_title_size"
         tools:text="Name" />

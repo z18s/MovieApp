@@ -102,7 +102,7 @@ public class FavoritesPresenter extends MvpPresenter<IFavoritesView> implements 
     }
 
     public void onClearFavoritesDataButtonClick() {
-        titleCache.clearFavorites();
+        titleCache.clearFavorites().observeOn(scheduler).subscribe(this::updateData);
     }
 
     public void updateData() {

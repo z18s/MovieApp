@@ -102,7 +102,7 @@ public class UserRatingsPresenter extends MvpPresenter<IUserRatingsView> impleme
     }
 
     public void onClearRatingsDataButtonClick() {
-        titleCache.clearUserRatings();
+        titleCache.clearUserRatings().observeOn(scheduler).subscribe(this::updateData);
     }
 
     public void updateData() {
