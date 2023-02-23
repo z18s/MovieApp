@@ -32,6 +32,9 @@ public interface SearchResultDao {
     @Delete
     void delete(List<RoomSearchResult> titles);
 
+    @Query("DELETE FROM search_result")
+    void deleteAll();
+
     @Query("SELECT * FROM search_result")
     List<RoomSearchResult> getAll();
 

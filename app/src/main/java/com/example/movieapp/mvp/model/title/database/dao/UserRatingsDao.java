@@ -32,6 +32,9 @@ public interface UserRatingsDao {
     @Delete
     void delete(List<RoomUserRatings> userRatingsList);
 
+    @Query("DELETE FROM user_ratings_titles")
+    void deleteAll();
+
     @Query("SELECT * FROM user_ratings_titles")
     List<RoomUserRatings> getAll();
 

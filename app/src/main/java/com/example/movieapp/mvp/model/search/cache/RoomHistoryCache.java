@@ -7,6 +7,7 @@ import com.example.movieapp.mvp.model.search.database.RoomSearch;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -32,6 +33,14 @@ public class RoomHistoryCache implements IHistoryCache, ILogger {
             }
 
             return searchQueryList;
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable clear() {
+        showVerboseLog(this, "clear");
+        return Completable.fromAction(() -> {
+            db.searchDao().deleteAll();
         }).subscribeOn(Schedulers.io());
     }
 }

@@ -2,6 +2,7 @@ package com.example.movieapp.mvp.presenter.title;
 
 import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.logger.ILogger;
+import com.example.movieapp.mvp.model.title.cache.ITitleCache;
 import com.example.movieapp.mvp.model.title.data.Title;
 import com.example.movieapp.mvp.model.title.repo.ITitleRepo;
 import com.example.movieapp.mvp.presenter.title.list.IFavoritesListPresenter;
@@ -26,6 +27,8 @@ public class FavoritesPresenter extends MvpPresenter<IFavoritesView> implements 
     Router router;
     @Inject
     ITitleRepo titleRepo;
+    @Inject
+    ITitleCache titleCache;
 
     public FavoritesPresenter() {
         MovieApp.instance.getTitleSubcomponent().inject(this);
@@ -96,6 +99,10 @@ public class FavoritesPresenter extends MvpPresenter<IFavoritesView> implements 
                 }
         );
         getViewState().updateFavoritesData();
+    }
+
+    public void onClearFavoritesDataButtonClick() {
+        titleCache.clearFavorites();
     }
 
     public void updateData() {

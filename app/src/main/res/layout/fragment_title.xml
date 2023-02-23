@@ -105,7 +105,6 @@
                     tools:text="Rating" />
 
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout

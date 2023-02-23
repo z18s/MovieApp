@@ -8,4 +8,5 @@ import io.reactivex.rxjava3.core.Single;
 public interface ISearchCache {
     Single<Search> getSearch(String query);
     Completable putSearch(String query, Search search);
+    Completable clear();
 }

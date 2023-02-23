@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ public class UserRatingsFragment extends MvpAppCompatFragment implements IUserRa
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView userRatingsRecyclerView;
     private UserRatingsAdapter userRatingsAdapter;
+    private Button clearRatingsDataButton;
 
     @InjectPresenter
     UserRatingsPresenter presenter;
@@ -55,6 +57,7 @@ public class UserRatingsFragment extends MvpAppCompatFragment implements IUserRa
 
     private void initViews() {
         swipeRefreshLayout = view.findViewById(R.id.srl_user_ratings);
+        clearRatingsDataButton = view.findViewById(R.id.btn_clear_ratings);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         userRatingsAdapter = new UserRatingsAdapter(presenter.getUserRatingsListPresenter());
@@ -64,6 +67,9 @@ public class UserRatingsFragment extends MvpAppCompatFragment implements IUserRa
 
     private void initListeners() {
         swipeRefreshLayout.setOnRefreshListener(this);
+        clearRatingsDataButton.setOnClickListener((view) -> {
+            presenter.onClearRatingsDataButtonClick();
+        });
     }
 
     @Override

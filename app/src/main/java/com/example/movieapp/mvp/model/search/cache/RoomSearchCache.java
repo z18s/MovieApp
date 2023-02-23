@@ -86,4 +86,12 @@ public class RoomSearchCache implements ISearchCache, ILogger {
                 searchResult.getImageUrl()
         ));
     }
+
+    @Override
+    public Completable clear() {
+        showVerboseLog(this, "clear");
+        return Completable.fromAction(() -> {
+            db.searchResultDao().deleteAll();
+        }).subscribeOn(Schedulers.io());
+    }
 }

@@ -32,6 +32,9 @@ public interface FavoritesDao {
     @Delete
     void delete(List<RoomFavorites> favoritesList);
 
+    @Query("DELETE FROM favorites_titles")
+    void deleteAll();
+
     @Query("SELECT * FROM favorites_titles")
     List<RoomFavorites> getAll();
 

@@ -1,9 +1,12 @@
 package com.example.movieapp.mvp.presenter.search;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+import static com.example.movieapp.mvp.model.base.SearchConstants.NO_RESULT;
+
 import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.search.cache.IHistoryCache;
-import com.example.movieapp.mvp.presenter.search.button.IFavoritesButtonPresenter;
+import com.example.movieapp.mvp.model.search.cache.ISearchCache;
 import com.example.movieapp.mvp.presenter.search.button.ISearchButtonPresenter;
 import com.example.movieapp.mvp.presenter.search.list.IHistoryListPresenter;
 import com.example.movieapp.mvp.presenter.search.text.ISearchEditTextPresenter;
@@ -20,9 +23,6 @@ import io.reactivex.rxjava3.core.Scheduler;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
 
-import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
-import static com.example.movieapp.mvp.model.base.SearchConstants.NO_RESULT;
-
 public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> implements ILogger {
 
     @Inject
@@ -31,6 +31,8 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
     Router router;
     @Inject
     IHistoryCache historyCache;
+    @Inject
+    ISearchCache searchCache;
 
     public SearchFieldPresenter() {
         MovieApp.instance.getSearchSubcomponent().inject(this);
@@ -124,6 +126,11 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
             );
         }
         getViewState().updateHistoryList();
+    }
+
+    public void onClearSearchDataButtonClick() {
+        historyCache.clear();
+        searchCache.clear();
     }
 
     @Override

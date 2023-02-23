@@ -10,6 +10,12 @@
     <string name="menu_ratings">Ratings</string>
     <string name="menu_exit">Exit</string>
 
+    <!-- Settings -->
+    <string name="settings_day_night_mode">Day/Night Mode</string>
+    <string name="settings_day_night_button_text">Swap</string>
+
+    <string name="clear_button_text">Clear Data</string>
+
     <!-- Search Field -->
     <string name="search_main_text">Movie, Series &amp; Game Browser</string>
     <string name="search_hint_text">Enter a movie name</string>

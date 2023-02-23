@@ -28,6 +28,7 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
     private View view;
     private SearchView searchView;
     private Button searchButton;
+    private Button clearSearchDataButton;
     private RecyclerView historyRecyclerView;
     private SearchHistoryAdapter historyAdapter;
 
@@ -53,6 +54,7 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
     private void initViews() {
         searchView = view.findViewById(R.id.sv_search);
         searchButton = view.findViewById(R.id.btn_search);
+        clearSearchDataButton = view.findViewById(R.id.btn_clear_search);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         historyAdapter = new SearchHistoryAdapter(presenter.getHistoryListPresenter());
@@ -64,6 +66,9 @@ public class SearchFieldFragment extends MvpAppCompatFragment implements ISearch
         searchButton.setOnClickListener((view) -> {
             hideKeyboard();
             startSearch(searchView.getQuery().toString());
+        });
+        clearSearchDataButton.setOnClickListener((view) -> {
+            presenter.onClearSearchDataButtonClick();
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

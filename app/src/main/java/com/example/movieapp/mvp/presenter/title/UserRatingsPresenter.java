@@ -2,6 +2,7 @@ package com.example.movieapp.mvp.presenter.title;
 
 import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.logger.ILogger;
+import com.example.movieapp.mvp.model.title.cache.ITitleCache;
 import com.example.movieapp.mvp.model.title.data.Title;
 import com.example.movieapp.mvp.model.title.repo.ITitleRepo;
 import com.example.movieapp.mvp.presenter.title.list.IUserRatingsListPresenter;
@@ -26,6 +27,8 @@ public class UserRatingsPresenter extends MvpPresenter<IUserRatingsView> impleme
     Router router;
     @Inject
     ITitleRepo titleRepo;
+    @Inject
+    ITitleCache titleCache;
 
     public UserRatingsPresenter() {
         MovieApp.instance.getTitleSubcomponent().inject(this);
@@ -96,6 +99,10 @@ public class UserRatingsPresenter extends MvpPresenter<IUserRatingsView> impleme
                 }
         );
         getViewState().updateUserRatingsData();
+    }
+
+    public void onClearRatingsDataButtonClick() {
+        titleCache.clearUserRatings();
     }
 
     public void updateData() {

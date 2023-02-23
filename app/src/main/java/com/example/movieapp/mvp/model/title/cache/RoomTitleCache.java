@@ -3,10 +3,10 @@ package com.example.movieapp.mvp.model.title.cache;
 import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
 
 import com.example.movieapp.logger.ILogger;
+import com.example.movieapp.mvp.model.base.database.Database;
+import com.example.movieapp.mvp.model.title.data.Title;
 import com.example.movieapp.mvp.model.title.database.RoomFavorites;
 import com.example.movieapp.mvp.model.title.database.RoomTitle;
-import com.example.movieapp.mvp.model.title.data.Title;
-import com.example.movieapp.mvp.model.base.database.Database;
 import com.example.movieapp.mvp.model.title.database.RoomUserRatings;
 
 import java.util.List;
@@ -101,6 +101,14 @@ public class RoomTitleCache implements ITitleCache, ILogger {
     }
 
     @Override
+    public Completable clearFavorites() {
+        showVerboseLog(this, "clearFavorites");
+        return Completable.fromAction(() -> {
+            db.favoritesDao().deleteAll();
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
     public Single<List<RoomUserRatings>> getUserRatings() {
         return Single.fromCallable(() -> {
             showVerboseLog(this, "getUserRatings");
@@ -130,6 +138,14 @@ public class RoomTitleCache implements ITitleCache, ILogger {
             showVerboseLog(this, "deleteUserRating");
             RoomUserRatings roomUserRatings = new RoomUserRatings(id);
             db.userRatingsDao().delete(roomUserRatings);
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable clearUserRatings() {
+        showVerboseLog(this, "clearUserRatings");
+        return Completable.fromAction(() -> {
+            db.userRatingsDao().deleteAll();
         }).subscribeOn(Schedulers.io());
     }
 }

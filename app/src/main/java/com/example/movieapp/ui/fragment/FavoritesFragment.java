@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ public class FavoritesFragment extends MvpAppCompatFragment implements IFavorite
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView favoritesRecyclerView;
     private FavoritesAdapter favoritesAdapter;
+    private Button clearFavoritesDataButton;
 
     @InjectPresenter
     FavoritesPresenter presenter;
@@ -55,6 +57,7 @@ public class FavoritesFragment extends MvpAppCompatFragment implements IFavorite
 
     private void initViews() {
         swipeRefreshLayout = view.findViewById(R.id.srl_favorites);
+        clearFavoritesDataButton = view.findViewById(R.id.btn_clear_favorites);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         favoritesAdapter = new FavoritesAdapter(presenter.getFavoritesListPresenter());
@@ -64,6 +67,10 @@ public class FavoritesFragment extends MvpAppCompatFragment implements IFavorite
 
     private void initListeners() {
         swipeRefreshLayout.setOnRefreshListener(this);
+        clearFavoritesDataButton.setOnClickListener((view) -> {
+            presenter.onClearFavoritesDataButtonClick();
+        });
+
     }
 
     @Override
