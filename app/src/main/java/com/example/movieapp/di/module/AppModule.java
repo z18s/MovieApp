@@ -1,6 +1,10 @@
 package com.example.movieapp.di.module;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.example.movieapp.application.MovieApp;
+import com.example.movieapp.mvp.model.base.TagConstants;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,5 +28,10 @@ public class AppModule {
     @Provides
     public Scheduler mainThreadScheduler() {
         return AndroidSchedulers.mainThread();
+    }
+
+    @Provides
+    public SharedPreferences appSharedPreferences() {
+        return app.getSharedPreferences(TagConstants.SETTINGS_TAG, Context.MODE_PRIVATE);
     }
 }

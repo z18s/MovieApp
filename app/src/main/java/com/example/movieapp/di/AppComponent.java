@@ -6,6 +6,7 @@ import com.example.movieapp.di.module.CiceroneModule;
 import com.example.movieapp.di.module.DatabaseModule;
 import com.example.movieapp.di.search.SearchSubcomponent;
 import com.example.movieapp.mvp.presenter.base.MainPresenter;
+import com.example.movieapp.mvp.presenter.base.SettingsPresenter;
 import com.example.movieapp.ui.MainActivity;
 
 import javax.inject.Singleton;
@@ -24,4 +25,5 @@ public interface AppComponent {
 
     void inject(MainActivity mainActivity);
     void inject(MainPresenter mainPresenter);
+    void inject(SettingsPresenter settingsPresenter);
 }

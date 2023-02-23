@@ -5,11 +5,11 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.example.movieapp.mvp.model.base.TagConstants;
-import com.example.movieapp.mvp.model.search.data.SearchResult;
 import com.example.movieapp.ui.fragment.FavoritesFragment;
 import com.example.movieapp.ui.fragment.PosterFragment;
 import com.example.movieapp.ui.fragment.SearchFieldFragment;
 import com.example.movieapp.ui.fragment.SearchResultFragment;
+import com.example.movieapp.ui.fragment.SettingsFragment;
 import com.example.movieapp.ui.fragment.TitleFragment;
 import com.example.movieapp.ui.fragment.UserRatingsFragment;
 
@@ -89,6 +89,14 @@ public class Screens {
             args.putString(TagConstants.POSTER_TAG, imageUrl);
             posterFragment.setArguments(args);
             return posterFragment;
+        }
+    }
+
+    public static class SettingsScreen extends SupportAppScreen {
+
+        @Override
+        public Fragment getFragment() {
+            return new SettingsFragment();
         }
     }
 }

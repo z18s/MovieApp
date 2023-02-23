@@ -1,16 +1,20 @@
 package com.example.movieapp.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.example.movieapp.R;
 import com.example.movieapp.application.MovieApp;
+import com.example.movieapp.application.Settings;
 import com.example.movieapp.logger.ILogger;
+import com.example.movieapp.mvp.model.base.SettingsConstants;
 import com.example.movieapp.mvp.presenter.base.MainPresenter;
 import com.example.movieapp.mvp.view.base.IMainView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,6 +38,8 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView, ILo
 
     @InjectPresenter
     MainPresenter presenter;
+    @Inject
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,7 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView, ILo
         MovieApp.instance.getAppComponent().inject(this);
         actionBar = getSupportActionBar();
 
+        initSettings();
         initActionBar();
         initViews();
         initListeners();
@@ -66,6 +73,11 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView, ILo
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initSettings() {
+        Settings.nightMode = preferences.getBoolean(SettingsConstants.NIGHT_MODE, false);
+        AppCompatDelegate.setDefaultNightMode(Settings.nightMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     private void initActionBar() {
@@ -111,6 +123,7 @@ public class MainActivity extends MvpAppCompatActivity implements IMainView, ILo
     protected void onPause() {
         navigatorHolder.removeNavigator();
         super.onPause();
+        preferences.edit().putBoolean(SettingsConstants.NIGHT_MODE, Settings.nightMode).apply();
         showVerboseLog(this, "onPause");
     }
 

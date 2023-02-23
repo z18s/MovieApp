@@ -38,7 +38,7 @@ public class MainPresenter extends MvpPresenter<IMainView> {
     }
 
     public void openSettingsScreen() {
-        //router.navigateTo(new Screens.SettingsScreen());
+        router.navigateTo(new Screens.SettingsScreen());
     }
 
     public void exit() {
