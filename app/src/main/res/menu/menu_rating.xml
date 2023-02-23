@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/rating_none"
+        android:title="@string/rating_none" />
+    <item
+        android:id="@+id/rating_one"
+        android:title="@string/rating_one" />
+    <item
+        android:id="@+id/rating_two"
+        android:title="@string/rating_two" />
+    <item
+        android:id="@+id/rating_three"
+        android:title="@string/rating_three" />
+    <item
+        android:id="@+id/rating_four"
+        android:title="@string/rating_four" />
+    <item
+        android:id="@+id/rating_five"
+        android:title="@string/rating_five" />
+    <item
+        android:id="@+id/rating_six"
+        android:title="@string/rating_six" />
+    <item
+        android:id="@+id/rating_seven"
+        android:title="@string/rating_seven" />
+    <item
+        android:id="@+id/rating_eight"
+        android:title="@string/rating_eight" />
+    <item
+        android:id="@+id/rating_nine"
+        android:title="@string/rating_nine" />
+    <item
+        android:id="@+id/rating_ten"
+        android:title="@string/rating_ten" />
+</menu>

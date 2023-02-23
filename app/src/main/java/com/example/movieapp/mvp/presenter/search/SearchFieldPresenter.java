@@ -6,7 +6,6 @@ import static com.example.movieapp.mvp.model.base.SearchConstants.NO_RESULT;
 import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.search.cache.IHistoryCache;
-import com.example.movieapp.mvp.model.search.cache.ISearchCache;
 import com.example.movieapp.mvp.presenter.search.button.ISearchButtonPresenter;
 import com.example.movieapp.mvp.presenter.search.list.IHistoryListPresenter;
 import com.example.movieapp.mvp.presenter.search.text.ISearchEditTextPresenter;
@@ -31,8 +30,6 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
     Router router;
     @Inject
     IHistoryCache historyCache;
-    @Inject
-    ISearchCache searchCache;
 
     public SearchFieldPresenter() {
         MovieApp.instance.getSearchSubcomponent().inject(this);
@@ -134,7 +131,6 @@ public class SearchFieldPresenter extends MvpPresenter<ISearchFieldView> impleme
 
     public void onClearSearchDataButtonClick() {
         historyCache.clear().observeOn(scheduler).subscribe(this::updateData);
-        searchCache.clear().observeOn(scheduler).subscribe(this::updateData);
     }
 
     @Override

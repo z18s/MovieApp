@@ -1,5 +1,7 @@
 package com.example.movieapp.mvp.presenter.title;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+
 import com.example.movieapp.application.MovieApp;
 import com.example.movieapp.logger.ILogger;
 import com.example.movieapp.mvp.model.title.repo.ITitleRepo;
@@ -11,8 +13,6 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Scheduler;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
-
-import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
 
 public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger {
 
@@ -95,18 +95,19 @@ public class TitlePresenter extends MvpPresenter<ITitleView> implements ILogger 
         getViewState().updateFavoriteIcon(titleName, favoriteStatus);
     }
 
-    public void onStarClick() {
-        if (userRating == null || userRating.equals(EMPTY_STRING)) {
-            //TODO
-            userRating = String.valueOf((int)(1 + (Math.random() * 10)));
-            titleRepo.setUserRating(titleId, userRating).observeOn(scheduler).subscribe(this::updateUserRating);
-        } else {
+    public void setUserRating(String userRating) {
+        this.userRating = userRating;
+        titleRepo.setUserRating(titleId, userRating).observeOn(scheduler).subscribe(this::updateUserRatingIcon);
+    }
+
+    public void deleteUserRating() {
+        if (userRating != null) {
             userRating = null;
-            titleRepo.deleteUserRating(titleId).observeOn(scheduler).subscribe(this::updateUserRating);
+            titleRepo.deleteUserRating(titleId).observeOn(scheduler).subscribe(this::updateUserRatingIcon);
         }
     }
 
-    public void updateUserRating() {
+    public void updateUserRatingIcon() {
         getViewState().updateUserRatingIcon(titleName, userRating);
     }
 

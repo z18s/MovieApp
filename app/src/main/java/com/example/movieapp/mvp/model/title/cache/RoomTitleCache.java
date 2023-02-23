@@ -126,10 +126,19 @@ public class RoomTitleCache implements ITitleCache, ILogger {
 
     @Override
     public Completable setUserRating(String id, String rating) {
-        return Completable.fromAction(() -> {
-            showVerboseLog(this, "setUserRating");
-            db.userRatingsDao().insert(new RoomUserRatings(id, rating));
-        }).subscribeOn(Schedulers.io());
+        if (getUserRating(id).blockingGet().equals(EMPTY_STRING)) {
+            // Установить оценку
+            return Completable.fromAction(() -> {
+                showVerboseLog(this, "setUserRating");
+                db.userRatingsDao().insert(new RoomUserRatings(id, rating));
+            }).subscribeOn(Schedulers.io());
+        } else {
+            // Обновить оценку
+            return Completable.fromAction(() -> {
+                showVerboseLog(this, "updateUserRating");
+                db.userRatingsDao().update(new RoomUserRatings(id, rating));
+            }).subscribeOn(Schedulers.io());
+        }
     }
 
     @Override

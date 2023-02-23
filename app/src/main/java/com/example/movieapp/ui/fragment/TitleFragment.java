@@ -1,5 +1,8 @@
 package com.example.movieapp.ui.fragment;
 
+import static com.example.movieapp.mvp.model.base.SearchConstants.BLANK_STRING;
+import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +30,6 @@ import com.example.movieapp.utils.image.IImageLoader;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
-
-import static com.example.movieapp.mvp.model.base.SearchConstants.EMPTY_STRING;
 
 public class TitleFragment extends MvpAppCompatFragment implements ITitleView, ILogger, BackButtonListener {
 
@@ -91,8 +93,27 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
             presenter.onHeartClick();
         });
         userRatingImageView.setOnClickListener((view) -> {
-            presenter.onStarClick();
+            showRatingPopupMenu();
         });
+    }
+
+    private void showRatingPopupMenu() {
+        PopupMenu ratingPopupMenu = new PopupMenu(requireContext(), userRatingImageView);
+        ratingPopupMenu.getMenuInflater().inflate(R.menu.menu_rating, ratingPopupMenu.getMenu());
+
+        ratingPopupMenu.setOnMenuItemClickListener((item) -> {
+            if (item.getTitle().toString().equals(BLANK_STRING)) {
+                presenter.deleteUserRating();
+            } else {
+                presenter.setUserRating(item.getTitle().toString());
+            }
+            return true;
+        });
+        ratingPopupMenu.setOnDismissListener((menu) -> {
+            menu.dismiss();
+        });
+
+        ratingPopupMenu.show();
     }
 
     @Override
@@ -123,9 +144,9 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
 
     private void setUserRating(String userRating) {
         showVerboseLog(this, "setUserRating");
-        if (userRating == null || userRating.equals("")) {
+        if (userRating == null || userRating.equals(EMPTY_STRING)) {
             userRatingImageView.setImageResource(R.drawable.ic_rating_false);
-            userRatingTextView.setText("");
+            userRatingTextView.setText(EMPTY_STRING);
         } else {
             userRatingImageView.setImageResource(R.drawable.ic_rating_true);
             userRatingTextView.setText(userRating);
@@ -144,7 +165,7 @@ public class TitleFragment extends MvpAppCompatFragment implements ITitleView, I
     }
 
     private void showToast(String titleName, String userRating) {
-        if (userRating == null || userRating.equals(EMPTY_STRING)) {
+        if (userRating == null || userRating.equals(EMPTY_STRING) || userRating.equals(BLANK_STRING)) {
             Toast.makeText(requireContext(), String.format("«%s» unrated", titleName), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(requireContext(), String.format("«%s» rated on %s", titleName, userRating), Toast.LENGTH_SHORT).show();
