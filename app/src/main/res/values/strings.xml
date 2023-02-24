@@ -14,7 +14,9 @@
     <string name="settings_day_night_mode">Day/Night Mode</string>
     <string name="settings_day_night_button_text">Swap</string>
 
-    <string name="clear_button_text">Clear Data</string>
+    <string name="clear_search_button_text">Clear Search History</string>
+    <string name="clear_favorites_button_text">Clear Favorites</string>
+    <string name="clear_ratings_button_text">Clear Ratings</string>
 
     <!-- Search Field -->
     <string name="search_main_text">Movie, Series &amp; Game Browser</string>

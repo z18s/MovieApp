@@ -11,8 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/user_ratings_padding"
         android:layout_weight="0.05"
-        android:text="@string/clear_button_text" />
+        android:text="@string/clear_ratings_button_text" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_user_ratings"
